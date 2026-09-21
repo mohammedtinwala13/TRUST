@@ -1,0 +1,103 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#071421" />
+  <meta name="description" content="TRUST is a privacy-first pre-flight risk check for shared terminals." />
+  <title>TRUST // Terminal Risk & Unseen Signal Tracker</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2307121a'/%3E%3Cpath d='M16 7v18M7 16h18' stroke='%2355e6d5' stroke-width='3'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="static/css/terminal.css" />
+</head>
+<body>
+  <div id="splash" aria-label="TRUST boot screen">
+    <div class="splash-inner">
+      <div class="splash-logo"><span class="brand-mark">✳</span>TRUST</div>
+      <p class="splash-copy" data-i18n="splashCopy">Initializing browser-visible trust surface.<br><span class="splash-hint" data-i18n="splashHint">No passwords. No uploads. No assumptions.</span></p>
+      <div class="splash-track"><i></i></div>
+      <div class="splash-meta"><span data-i18n="localDemo">LOCAL DEMO / V 2.4</span><span class="splash-done" data-i18n="ready">READY</span></div>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="TRUST home"><span class="brand-mark">✳</span><span>TRUST <span class="brand-sub" data-i18n="brandSub">/ TERMINAL RISK & UNSEEN SIGNAL TRACKER</span></span></a>
+    <nav aria-label="Primary navigation"><a href="#why" data-i18n="navWhy">Why it matters</a><a href="#toolkit" data-i18n="navToolkit">Toolkit</a><a href="#toolkit" data-i18n="navPhysical">Physical checks</a><a href="#limits" data-i18n="navLimits">Boundaries</a></nav>
+    <div class="language-control"><span data-i18n="languageLabel">भाषा / Language</span><select id="languageSelect" aria-label="Select language" data-i18n-attr="aria-label:languageSelectLabel"><option value="en">English</option><option value="hi">हिन्दी</option><option value="bn">বাংলা</option><option value="mr">मराठी</option><option value="te">తెలుగు</option><option value="ta">தமிழ்</option><option value="kn">ಕನ್ನಡ</option><option value="gu">ગુજરાતી</option><option value="pa">ਪੰਜਾਬੀ</option></select></div>
+    <div class="status-pill"><span class="dot"></span><span data-i18n="localReady">LOCAL / READY</span></div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div data-reveal>
+        <div class="eyebrow" data-i18n="eyebrow">pre-flight security for shared screens</div>
+        <h1><span data-i18n="heroTitlePrefix">Check first.</span><br><em data-i18n="heroTitleAccent">Then type.</em></h1>
+        <p class="hero-copy" data-i18n="heroCopy">Before you enter a password on a shared computer, check the screen, the browser, and the room around you. TRUST makes the safe next step easy.</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="#toolkit" id="enterToolkit" data-i18n="enterToolkit">Open safety toolkit →</a><a class="btn" href="#why" data-i18n="howItWorks">How it works</a></div>
+        <div class="micro-proof"><span data-i18n="proofOne">offline-first</span><span data-i18n="proofTwo">privacy-first</span><span data-i18n="proofThree">plain-language guidance</span></div>
+      </div>
+      <div class="hero-scene" data-reveal aria-label="Illustration of a community cybercafé helping people use digital services safely">
+        <div class="scene-grid"></div><div class="beam"></div>
+        <div class="scene-label"><span data-i18n="sceneLabel">COMMUNITY TRUST SURFACE</span><strong data-i18n="sceneCallout">CHECK BEFORE YOU TYPE</strong></div>
+        <div class="data-chip"><strong data-i18n="realWorldCheck">REAL-WORLD CHECK</strong><span data-i18n="realWorldText">Look around. Verify the address. Protect your PIN.</span></div>
+        <div class="image-caption"><span data-i18n="sceneCaptionOne">Public computer / shared screen</span><span data-i18n="sceneCaptionTwo">built for people, not profiles</span></div>
+      </div>
+      <div class="scroll-note" data-i18n="scrollNote">scroll to explore</div>
+    </section>
+
+    <div class="band"><p><strong data-i18n="bandQuestion">THE QUESTION:</strong> <span data-i18n="bandQuestionText">can this browser surface be trusted right now?</span></p><span class="line"></span><p class="mono" data-i18n="bandPhases">[ BEFORE / DURING / AFTER ]</p></div>
+
+    <section class="section" id="why">
+      <div class="section-head" data-reveal><div><div class="section-kicker" data-i18n="storyKicker">02 / the story</div><h2><span data-i18n="storyTitleLead">Most attacks are</span><br><span data-i18n="storyTitleAccent">invisible</span> <span data-i18n="storyTitleTail">until it is late.</span></h2></div><p class="section-intro" data-i18n="storyIntro">TRUST turns quiet browser signals into a calm, human-readable decision—before a customer has to gamble with a password.</p></div>
+      <div class="story-grid">
+        <article class="story-card" data-num="01" data-reveal><div class="icon">⌁</div><h3 data-i18n="storyOneTitle">Observe the surface</h3><p data-i18n="storyOneCopy">Check browser-visible hooks, overlays, clipboard behavior, automation signals, rendering noise, and transport context.</p></article>
+        <article class="story-card" data-num="02" data-reveal><div class="icon">◌</div><h3 data-i18n="storyTwoTitle">Explain the signal</h3><p data-i18n="storyTwoCopy">Six weighted checks become a score with a reason. No black box, no fear language, no pretending to see what a browser cannot.</p></article>
+        <article class="story-card" data-num="03" data-reveal><div class="icon">↗</div><h3 data-i18n="storyThreeTitle">Choose your next move</h3><p data-i18n="storyThreeCopy">Use the verdict to pause, continue with caution, run a simulation, or wipe the session before you walk away.</p></article>
+      </div>
+      <div class="terminal-shell" data-reveal style="margin-top: 42px"><div class="terminal-head"><span><span class="lights"><i></i><i></i><i></i></span></span><span data-i18n="terminalObservation">trust-agent / live observation</span><span data-i18n="recordingDemo">● recording demo</span></div><div class="terminal-body" id="terminalBody" aria-live="polite"></div></div>
+    </section>
+
+    <section class="section toolkit" id="toolkit">
+      <div class="section-head" data-reveal><div><div class="section-kicker" data-i18n="toolkitKicker">03 / the toolkit</div><h2><span data-i18n="toolkitTitle">One menu.</span><br><span data-i18n="toolkitAccent">Every next move.</span></h2></div><p class="section-intro" data-i18n="toolkitIntro">Everything runs locally in this demo. The scanner checks the shared screen and browser; it never asks for a password.</p></div>
+      <div class="tool-layout" data-reveal>
+        <aside class="tool-menu" aria-label="Toolkit menu" data-i18n-attr="aria-label:toolkitMenu">
+          <button class="tool-tab active" data-tool="scan"><span data-i18n="safeScanTab">01 / Safe Scan</span><small data-i18n="safeScanHint">Get a trust score</small></button>
+          <button class="tool-tab" data-tool="simulator"><span data-i18n="threatLabTab">02 / Threat Lab</span><small data-i18n="threatLabHint">See the red flags</small></button>
+          <button class="tool-tab" data-tool="wipe"><span data-i18n="wipeTab">03 / Wipe Session</span><small data-i18n="wipeHint">Leave nothing behind</small></button>
+          <button class="tool-tab" data-tool="physical"><span data-i18n="physicalTab">04 / Physical Check</span><small data-i18n="physicalHint">Look around you</small></button>
+          <button class="tool-tab" data-tool="boundaries"><span data-i18n="boundariesTab">05 / Boundaries</span><small data-i18n="boundariesHint">Know what it cannot see</small></button>
+        </aside>
+        <div class="tool-panel">
+          <div class="tool-content active" id="tool-scan"><div class="section-kicker" data-i18n="scanKicker">active module / pre-flight</div><h3 class="tool-title" data-i18n="scanTitle">Is this terminal ready?</h3><p class="tool-description" data-i18n="scanDescription">Run the browser check for an explainable result. A score of 100 means no browser-visible integrity issue was found—not that the whole computer is guaranteed safe.</p><button class="btn btn-primary" id="runScan" data-i18n="scanButton">Run safety check →</button><div class="scan-card"><div class="score-ring" id="scoreRing"><div class="score-value"><span id="scoreValue">100</span><small>/ 100</small></div></div><div class="scan-meta"><h3 id="verdict">LOW RISK / browser checks passed</h3><p id="verdictCopy">No browser-visible integrity issue was detected. Complete the physical checklist before sensitive work.</p><div class="progress"><i id="scanProgress"></i></div><small class="mono" id="scanStatus" style="display:block;color:var(--faint);margin-top:9px">READY / no check has run</small></div></div><div class="signal-list" id="signalList"></div><p class="plain-note" data-i18n="scoreNote">Informational checks such as offline mode are shown for context and do not lower a clean score.</p></div>
+          <div class="tool-content" id="tool-simulator"><div class="section-kicker" data-i18n="simKicker">active module / controlled simulation</div><h3 class="tool-title" data-i18n="simTitle">Make the invisible visible.</h3><p class="tool-description" data-i18n="simDescription">Toggle a simulated red flag and watch the score respond. This is a visual training lab; it never changes your browser prototypes or touches real credentials.</p><div class="sim-grid"><div class="sim-card"><h3 data-i18n="simOverlayTitle">Invisible overlay</h3><p data-i18n="simOverlayCopy">A full-screen layer intercepts clicks while looking transparent.</p><button class="switch" data-threat="overlay" aria-label="Toggle invisible overlay" data-i18n-attr="aria-label:simOverlayAria"><i></i></button></div><div class="sim-card"><h3 data-i18n="simClipboardTitle">Clipboard swapper</h3><p data-i18n="simClipboardCopy">A copied account or wallet string is changed before it reaches its destination.</p><button class="switch" data-threat="clipboard" aria-label="Toggle clipboard swapper" data-i18n-attr="aria-label:simClipboardAria"><i></i></button></div><div class="sim-card"><h3 data-i18n="simInputTitle">Input hook</h3><p data-i18n="simInputCopy">A hostile listener watches for keystrokes at the page boundary.</p><button class="switch" data-threat="input" aria-label="Toggle input hook" data-i18n-attr="aria-label:simInputAria"><i></i></button></div><div class="sim-card"><h3 data-i18n="simRemoteTitle">Remote browser</h3><p data-i18n="simRemoteCopy">Automation signals suggest this session is being driven remotely.</p><button class="switch" data-threat="remote" aria-label="Toggle remote browser" data-i18n-attr="aria-label:simRemoteAria"><i></i></button></div></div><div class="scan-card" style="margin-top:22px"><div class="score-ring" id="simRing"><div class="score-value"><span id="simScore">100</span><small>/ 100</small></div></div><div class="scan-meta"><h3 id="simVerdict">No simulated threats</h3><p id="simCopy">Your lab is clean. Try one signal at a time to see how a critical failure changes the outcome.</p></div></div></div>
+          <div class="tool-content" id="tool-wipe"><div class="section-kicker" data-i18n="wipeKicker">active module / exit protocol</div><h3 class="tool-title" data-i18n="wipeTitle">Leave the terminal lighter.</h3><p class="tool-description" data-i18n="wipeDescription">A public computer should not remember your visit. Use this checklist before you step away—especially after banking, identity, or document work.</p><div class="wipe-box"><h3 data-i18n="wipeProtocolTitle">Session wipe protocol</h3><p data-i18n="wipeProtocolCopy">Clear this demo's local state, reset all simulated signals, and return the app to its safe opening posture. Real browser history and OS-level data still require the browser's own controls.</p><button class="btn btn-primary" id="wipeSession" data-i18n="wipeButton">Wipe demo session</button></div><div class="signal-list" style="margin-top:22px"><div class="signal"><span data-i18n="wipeHistory">Browser history / downloads</span><b class="caution" data-i18n="manual">manual</b><b data-i18n="useBrowserControls">Use browser controls</b></div><div class="signal"><span data-i18n="clipboardContents">Clipboard contents</span><b class="pass" data-i18n="clear">clear</b><b data-i18n="demoCleared">Demo cleared</b></div><div class="signal"><span>TRUST local state</span><b class="pass" data-i18n="clear">clear</b><b data-i18n="readyState">Ready</b></div></div></div>
+          <div class="tool-content" id="tool-physical"><div class="section-kicker" data-i18n="physicalKicker">active module / before you type</div><h3 class="tool-title" data-i18n="physicalTitle">Before you type, look around.</h3><p class="tool-description" data-i18n="physicalDescription">These five quick checks cover risks a browser cannot see. Ask the café operator for help if anything looks unfamiliar.</p><div class="physical-grid"><label class="physical-check"><input type="checkbox" data-physical="keyboard"><span><strong data-i18n="physicalKeyboardTitle">Keyboard and cables</strong><small data-i18n="physicalKeyboardCopy">Check for an extra USB device, loose adapter, or unusual cable between the keyboard and computer.</small></span></label><label class="physical-check"><input type="checkbox" data-physical="screen"><span><strong data-i18n="physicalScreenTitle">Screen and address</strong><small data-i18n="physicalScreenCopy">Confirm the service name and lock icon before entering a password. Do not continue through a warning screen.</small></span></label><label class="physical-check"><input type="checkbox" data-physical="people"><span><strong data-i18n="physicalPeopleTitle">People nearby</strong><small data-i18n="physicalPeopleCopy">Look for cameras, mirrors, or anyone who can see your PIN, OTP, or screen.</small></span></label><label class="physical-check"><input type="checkbox" data-physical="pin"><span><strong data-i18n="physicalPinTitle">Protect your PIN</strong><small data-i18n="physicalPinCopy">Cover the keyboard or phone when entering a PIN. Never read an OTP aloud.</small></span></label><label class="physical-check"><input type="checkbox" data-physical="signout"><span><strong data-i18n="physicalSignoutTitle">Sign out and wipe</strong><small data-i18n="physicalSignoutCopy">Sign out of every service, close the browser, and remove any paper or downloaded file.</small></span></label></div><div class="physical-status" id="physicalStatus">0 of 5 checks complete</div><p class="plain-note" data-i18n="physicalNote">A green browser score is only one part of staying safe. Finish these checks before banking or sharing identity documents.</p></div>
+          <div class="tool-content" id="tool-boundaries"><div class="section-kicker" data-i18n="boundariesKicker">active module / honesty layer</div><h3 class="tool-title" data-i18n="boundariesTitle">Useful. Not magic.</h3><p class="tool-description" data-i18n="boundariesDescription">A web page can estimate browser risk. It cannot see inside the operating system. That boundary is part of the product, not a footnote.</p><div class="limits"><div class="limit"><b>01</b><div><strong data-i18n="kernelTitle">Kernel keyloggers</strong><p data-i18n="kernelCopy">OS-level hooks, hardware skimmers, and malicious USB devices are outside browser sandbox access.</p></div></div><div class="limit"><b>02</b><div><strong data-i18n="shoulderTitle">Shoulder surfing</strong><p data-i18n="shoulderCopy">No web app can tell whether someone is watching the screen. Check your surroundings.</p></div></div><div class="limit"><b>03</b><div><strong data-i18n="falsePositiveTitle">False positives</strong><p data-i18n="falsePositiveCopy">Low-end hardware or browser privacy tools can look unusual. Treat warnings as prompts to verify.</p></div></div><div class="limit"><b>04</b><div><strong data-i18n="highRiskTitle">High-risk verdict</strong><p data-i18n="highRiskCopy">If a critical browser signal fails, do not enter credentials. Move to a trusted device.</p></div></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="limits"><div class="about-grid"><div data-reveal><div class="section-kicker" data-i18n="promiseKicker">04 / the promise</div><h2><span data-i18n="promiseTitleLead">Security that</span><br><span data-i18n="promiseTitleAccent">earns trust.</span></h2><p class="hero-copy" style="font-size:16px;margin-top:24px" data-i18n="promiseCopy">TRUST is a pre-flight risk estimate—not an antivirus, not a guarantee, and never a replacement for careful banking habits. Its job is to make the next safe choice easier.</p></div><div class="limits" data-reveal><div class="limit"><b>✓</b><div><strong data-i18n="privateTitle">Private by design</strong><p data-i18n="privateCopy">No account. No cloud upload. No password field. The demo stays in the page.</p></div></div><div class="limit"><b>↗</b><div><strong data-i18n="humanTitle">Built for humans</strong><p data-i18n="humanCopy">Simple verdicts first, technical detail when you want to go deeper.</p></div></div><div class="limit"><b>!</b><div><strong data-i18n="scopeTitle">Honest about scope</strong><p data-i18n="scopeCopy">Every check states what it saw and what it could not possibly know.</p></div></div></div></div></section>
+  </main>
+  <footer><span data-i18n="footerLeft">TRUST // TERMINAL RISK & UNSEEN SIGNAL TRACKER</span><span data-i18n="footerRight">LOCAL DEMO · 0 CREDENTIALS REQUESTED · v2.4</span></footer>
+  <div class="toast" id="toast" role="status"></div>
+
+    <script src="static/js/i18n.js"></script>
+  <script src="static/js/qrcode.js"></script>
+  <script src="static/js/detectors/inputTiming.js"></script>
+  <script src="static/js/detectors/clipboard.js"></script>
+  <script src="static/js/detectors/domScript.js"></script>
+  <script src="static/js/detectors/browserEnv.js"></script>
+  <script src="static/js/detectors/canvasWebgl.js"></script>
+  <script src="static/js/detectors/networkSignals.js"></script>
+  <script src="static/js/detectors/environment.js"></script>
+  <script src="static/js/scoring.js"></script>
+  <script src="static/js/simulator.js"></script>
+  <script src="static/js/biometricSandbox.js"></script>
+  <script src="static/js/reportExporter.js"></script>
+  <script src="static/js/terminalI18n.js"></script>
+  <script src="static/js/staticPageI18n.js"></script>
+  <script src="static/js/app.js"></script>
+</body>
+</html>
+
+

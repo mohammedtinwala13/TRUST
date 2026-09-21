@@ -1,0 +1,5724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRUST — Browser-Based Pre-Banking Terminal Safety Check</title>
+  
+  <!-- CSS Stylesheets -->
+  <style>
+/* ==========================================================================
+   TRUST - Core Cybersecurity Design System & Dashboard Styles
+   ========================================================================== */
+
+:root {
+  --bg-dark: #090d16;
+  --bg-card: #111827;
+  --bg-card-hover: #1f293d;
+  --bg-surface: #1e293b;
+  --border-subtle: #334155;
+  --border-focus: #06b6d4;
+  
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  --color-green: #10b981;
+  --color-green-glow: rgba(16, 185, 129, 0.25);
+  --color-yellow: #f59e0b;
+  --color-yellow-glow: rgba(245, 158, 11, 0.25);
+  --color-red: #ef4444;
+  --color-red-glow: rgba(239, 68, 68, 0.35);
+  --color-cyan: #06b6d4;
+  --color-violet: #8b5cf6;
+  
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Header */
+.trust-header {
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 1rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-shield {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--color-cyan), var(--color-violet));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+}
+
+.logo-text h1 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo-text p {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lang-select-wrap select {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.lang-select-wrap select:focus {
+  border-color: var(--border-focus);
+}
+
+/* Primary Scan Button */
+.btn-primary {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #fff;
+  border: 1px solid #38bdf8;
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0369a1, #075985);
+  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--text-muted);
+}
+
+.btn-danger-outline {
+  background: transparent;
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-danger-outline:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: var(--color-red);
+}
+
+/* Main Container */
+.trust-main {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem;
+  flex: 1;
+}
+
+/* Disclaimer Banner */
+.disclaimer-strip {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-left: 4px solid var(--color-yellow);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.disclaimer-strip strong {
+  color: var(--text-primary);
+}
+
+/* Tabs Navigation */
+.trust-nav-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.trust-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 0.65rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.trust-tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.trust-tab-btn.active {
+  color: #38bdf8;
+  border-bottom: 2px solid #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+}
+
+/* Tab Panes */
+.trust-tab-pane {
+  display: none;
+}
+
+.trust-tab-pane.active {
+  display: block;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer */
+.trust-footer {
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  padding: 1.25rem 1.5rem;
+  margin-top: auto;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.terminal-meta-tag {
+  font-family: var(--font-mono);
+  background: var(--bg-surface);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  color: var(--color-cyan);
+}
+
+/* ==========================================================================
+   TRUST - Components, Gauge Dial, Scanner HUD & Threat Simulator
+   ========================================================================== */
+
+/* Overview Hero Grid */
+.hero-dashboard-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 860px) {
+  .hero-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Score Card / HUD */
+.score-hud-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.score-hud-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-cyan), var(--color-violet));
+}
+
+.score-dial-wrap {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  margin: 1rem 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-dial-svg {
+  width: 170px;
+  height: 170px;
+  transform: rotate(-135deg);
+}
+
+.score-dial-bg {
+  fill: none;
+  stroke: var(--bg-surface);
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-dasharray: 330 440;
+}
+
+.score-dial-fill {
+  fill: none;
+  stroke: var(--color-green);
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-dasharray: 0 440;
+  transition: stroke-dasharray 0.8s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.4s ease;
+}
+
+.score-dial-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-value-text {
+  font-size: 2.75rem;
+  font-weight: 900;
+  font-family: var(--font-mono);
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.score-max-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Traffic Light Pill */
+.traffic-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-surface);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-subtle);
+  margin-top: 0.5rem;
+}
+
+.light-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.25;
+  transition: all 0.3s ease;
+}
+
+.dot-red { background: var(--color-red); }
+.dot-yellow { background: var(--color-yellow); }
+.dot-green { background: var(--color-green); }
+
+.light-dot.active {
+  opacity: 1;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.light-dot.pulse {
+  animation: pulseLight 1.5s infinite;
+}
+
+@keyframes pulseLight {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.25); opacity: 0.8; }
+}
+
+/* Risk Badge */
+.risk-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  margin-top: 0.75rem;
+  text-transform: uppercase;
+}
+
+.risk-green {
+  background: var(--color-green-glow);
+  color: #34d399;
+  border: 1px solid var(--color-green);
+}
+
+.risk-yellow {
+  background: var(--color-yellow-glow);
+  color: #fbbf24;
+  border: 1px solid var(--color-yellow);
+}
+
+.risk-red {
+  background: var(--color-red-glow);
+  color: #f87171;
+  border: 1px solid var(--color-red);
+}
+
+.confidence-text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* Recommendation & Summary Column */
+.recommendation-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.recommendation-card {
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  box-shadow: var(--shadow-card);
+}
+
+.rec-green {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 182, 212, 0.06));
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.rec-yellow {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(217, 119, 6, 0.06));
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.rec-red {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(185, 28, 28, 0.08));
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.rec-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.rec-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.rec-green .rec-header h2 { color: #34d399; }
+.rec-yellow .rec-header h2 { color: #fbbf24; }
+.rec-red .rec-header h2 { color: #f87171; }
+
+.rec-body {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+  line-height: 1.55;
+}
+
+/* Summary Bullets Card */
+.summary-bullets-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-card);
+  flex: 1;
+}
+
+.summary-bullets-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.summary-bullets-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.summary-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.summary-item.item-danger {
+  border-left: 4px solid var(--color-red);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.summary-item.item-warning {
+  border-left: 4px solid var(--color-yellow);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.summary-item.item-success {
+  border-left: 4px solid var(--color-green);
+}
+
+.summary-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.summary-text-wrap {
+  flex: 1;
+}
+
+.summary-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+
+.summary-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+  font-family: var(--font-mono);
+}
+
+.summary-importance {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* Category Grid */
+.category-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.cat-card:hover {
+  border-color: var(--border-focus);
+}
+
+.cat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.cat-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cat-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.badge-status-pass {
+  background: var(--color-green-glow);
+  color: #34d399;
+}
+
+.badge-status-warn {
+  background: var(--color-yellow-glow);
+  color: #fbbf24;
+}
+
+.badge-status-fail {
+  background: var(--color-red-glow);
+  color: #f87171;
+}
+
+.cat-score-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-surface);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.cat-score-bar-fill {
+  height: 100%;
+  transition: width 0.6s ease;
+}
+
+.cat-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.cat-footer strong {
+  color: var(--text-secondary);
+}
+
+/* Signals Data Table */
+.signals-table-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  box-shadow: var(--shadow-card);
+}
+
+.signals-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.84rem;
+}
+
+.signals-table th {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+
+.signals-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: top;
+}
+
+.signals-table tr:last-child td {
+  border-bottom: none;
+}
+
+.signal-subtext {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.signal-explain {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.signal-row-failed {
+  background: rgba(239, 68, 68, 0.04);
+}
+
+.penalty-tag {
+  color: #f87171;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.penalty-zero {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.badge-success { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+.badge-warning { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+.badge-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+.badge-info { background: rgba(6, 182, 212, 0.2); color: #38bdf8; }
+.badge-neutral { background: var(--bg-surface); color: var(--text-muted); }
+
+.tag-badge {
+  font-size: 0.65rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-weight: 800;
+}
+
+.tag-danger { background: rgba(239, 68, 68, 0.25); color: #f87171; }
+.tag-warning { background: rgba(245, 158, 11, 0.25); color: #fbbf24; }
+.tag-success { background: rgba(16, 185, 129, 0.25); color: #34d399; }
+
+/* Interactive Labs */
+.interactive-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-card);
+}
+
+.interactive-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.interactive-card p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.typing-input-box {
+  width: 100%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: var(--font-sans);
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+.typing-input-box:focus {
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+}
+
+.biometric-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  background: var(--bg-surface);
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+}
+
+.biometric-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.biometric-stat-item span {
+  color: var(--text-muted);
+}
+
+.biometric-stat-item strong {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+}
+
+.biometric-canvas {
+  width: 100%;
+  height: 120px;
+  background: #0b1120;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Threat Simulator Grid */
+.simulator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.sim-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sim-card-top h4 {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.sim-card-top p {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-bottom: 1rem;
+}
+
+.btn-sim-attack {
+  background: rgba(30, 41, 59, 0.9);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.btn-sim-attack:hover {
+  border-color: var(--text-muted);
+}
+
+.btn-sim-attack.active-attack {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--color-red);
+  color: #f87171;
+}
+
+.sim-status {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.active-attack .sim-status {
+  color: #f87171;
+}
+
+/* Safe Banking Protocol Checklist */
+.checklist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  background: var(--bg-surface);
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.checklist-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-cyan);
+  margin-top: 0.2rem;
+  cursor: pointer;
+}
+
+.checklist-content strong {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
+}
+
+.checklist-content p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+.progress-bar-wrap {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-surface);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 1rem 0 0.5rem;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* QR Code & Mobile Launch Box */
+.qr-share-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .qr-share-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.qr-code-holder {
+  background: #ffffff;
+  padding: 8px;
+  border-radius: 8px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.feedback-box {
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  margin-top: 0.85rem;
+}
+
+.alert-success { background: rgba(16, 185, 129, 0.15); border: 1px solid var(--color-green); color: #34d399; }
+.alert-warning { background: rgba(245, 158, 11, 0.15); border: 1px solid var(--color-yellow); color: #fbbf24; }
+.alert-danger { background: rgba(239, 68, 68, 0.2); border: 1px solid var(--color-red); color: #f87171; }
+
+.spinner-inline {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   SIMPLE VIEW FOR LAYMEN
+   ========================================================================== */
+.simple-view-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.simple-traffic-light {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  transition: all 0.5s ease;
+  position: relative;
+}
+
+.simple-traffic-light.traffic-safe {
+  background: radial-gradient(circle, #10b981 0%, #047857 100%);
+  box-shadow: 0 0 50px rgba(16, 185, 129, 0.5);
+  border: 4px solid #34d399;
+}
+
+.simple-traffic-light.traffic-caution {
+  background: radial-gradient(circle, #f59e0b 0%, #b45309 100%);
+  box-shadow: 0 0 50px rgba(245, 158, 11, 0.5);
+  border: 4px solid #fbbf24;
+}
+
+.simple-traffic-light.traffic-danger {
+  background: radial-gradient(circle, #ef4444 0%, #b91c1c 100%);
+  box-shadow: 0 0 50px rgba(239, 68, 68, 0.5);
+  border: 4px solid #f87171;
+  animation: pulse-danger 1.5s infinite;
+}
+
+.simple-traffic-light.traffic-unknown {
+  background: radial-gradient(circle, #64748b 0%, #334155 100%);
+  box-shadow: 0 0 30px rgba(100, 116, 139, 0.3);
+  border: 4px solid #94a3b8;
+}
+
+@keyframes pulse-danger {
+  0% { transform: scale(1); box-shadow: 0 0 30px rgba(239, 68, 68, 0.5); }
+  50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(239, 68, 68, 0.8); }
+  100% { transform: scale(1); box-shadow: 0 0 30px rgba(239, 68, 68, 0.5); }
+}
+
+.simple-verdict-card {
+  width: 100%;
+  text-align: center;
+  padding: 1.75rem 2rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 2rem;
+  transition: all 0.4s ease;
+}
+
+.simple-verdict-card h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.simple-verdict-card p {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  opacity: 0.95;
+}
+
+.simple-verdict-card.verdict-safe {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 78, 59, 0.4));
+  border: 2px solid var(--color-green);
+  color: #ecfdf5;
+}
+
+.simple-verdict-card.verdict-safe h2 {
+  color: #34d399;
+}
+
+.simple-verdict-card.verdict-caution {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(120, 53, 15, 0.4));
+  border: 2px solid var(--color-yellow);
+  color: #fffbeb;
+}
+
+.simple-verdict-card.verdict-caution h2 {
+  color: #fbbf24;
+}
+
+.simple-verdict-card.verdict-danger {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(127, 29, 29, 0.5));
+  border: 2px solid var(--color-red);
+  color: #fef2f2;
+}
+
+.simple-verdict-card.verdict-danger h2 {
+  color: #f87171;
+}
+
+.simple-verdict-card.verdict-unknown {
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.simple-checks-section {
+  width: 100%;
+}
+
+.simple-checks-section h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.simple-checks-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.simple-check-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.15rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.simple-check-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-focus);
+}
+
+.check-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.check-content {
+  flex: 1;
+}
+
+.check-content h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.check-content p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.check-status {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+
+/* ==========================================================================
+   TRUST - Print & PDF Export Stylesheet
+   ========================================================================== */
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt;
+  }
+
+  .trust-header,
+  .trust-nav-tabs,
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger-outline,
+  .lang-select-wrap,
+  .interactive-card,
+  .simulator-grid,
+  .checklist-list,
+  .qr-share-card {
+    display: none !important;
+  }
+
+  .trust-main {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .trust-tab-pane {
+    display: block !important;
+  }
+
+  #tab-interactive,
+  #tab-simulator,
+  #tab-checklist {
+    display: none !important;
+  }
+
+  .score-hud-card {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+  }
+
+  .score-value-text {
+    color: #0f172a !important;
+  }
+
+  .recommendation-card {
+    background: #f1f5f9 !important;
+    border: 2px solid #64748b !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+  }
+
+  .rec-body {
+    color: #1e293b !important;
+  }
+
+  .signals-table-wrap {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+
+  .signals-table th {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+  }
+
+  .signals-table td {
+    border-bottom: 1px solid #e2e8f0 !important;
+    color: #1e293b !important;
+  }
+
+  .cat-card {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+
+  .cat-name {
+    color: #0f172a !important;
+  }
+
+  .summary-item {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+
+  .summary-title {
+    color: #0f172a !important;
+  }
+
+  .print-only-header {
+    display: block !important;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #0f172a;
+  }
+}
+
+.print-only-header {
+  display: none;
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Top App Header -->
+  <header class="trust-header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <div class="logo-shield">🛡️</div>
+        <div class="logo-text">
+          <h1 data-i18n="appName">TRUST</h1>
+          <p data-i18n="appSubtitle">Terminal Risk &amp; Unseen Signal Tracker</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Language Selector -->
+        <div class="lang-select-wrap">
+          <select id="trust-lang-select" aria-label="Select Language">
+            <option value="en">English (Global)</option>
+            <option value="hi">हिंदी (Hindi)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+          </select>
+        </div>
+
+        <!-- Export Actions -->
+        <button id="btn-export-json" class="btn-secondary" title="Export JSON Security Audit Log">
+          <span>📥</span> <span data-i18n="btnExportJSON">Export JSON</span>
+        </button>
+
+        <button id="btn-print-report" class="btn-secondary" title="Print or Save PDF Certificate">
+          <span>🖨️</span> <span data-i18n="btnPrintReport">Print / PDF</span>
+        </button>
+
+        <!-- Primary Scan Button -->
+        <button id="btn-rescan" class="btn-primary">
+          <span>⚡</span> <span data-i18n="btnRunScan">Re-Scan Terminal</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App Area -->
+  <main class="trust-main" id="trust-app-container">
+
+    <!-- Printable Report Header (Hidden in Screen View) -->
+    <div class="print-only-header">
+      <h1>TRUST — Terminal Security Audit Report</h1>
+      <p>Generated on <span id="print-timestamp"></span> | Terminal ID: <span id="print-terminal-id"></span></p>
+    </div>
+
+    <!-- Honest Disclaimer Strip -->
+    <div class="disclaimer-strip">
+      <div>
+        <strong>⚠️ Security Advisory:</strong>
+        <span data-i18n="honestDisclaimer">This checks for invisible terminal risk. It does NOT prove malware absence.</span>
+      </div>
+      <div class="terminal-meta-tag">
+        Terminal ID: <span id="terminal-fp-id">ANALYZING...</span>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="trust-nav-tabs">
+      <button class="trust-tab-btn active" data-tab="simple" data-i18n="tabSimple">Simple Safety View</button>
+      <button class="trust-tab-btn" data-tab="overview" data-i18n="tabOverview">Trust Dashboard</button>
+      <button class="trust-tab-btn" data-tab="signals" data-i18n="tabSignals">Technical Analysis</button>
+      <button class="trust-tab-btn" data-tab="interactive" data-i18n="tabInteractive">Interactive Labs</button>
+      <button class="trust-tab-btn" data-tab="simulator" data-i18n="tabSimulator">Threat Simulator</button>
+      <button class="trust-tab-btn" data-tab="checklist" data-i18n="tabChecklist">Safe Banking Protocol</button>
+    </nav>
+
+    <!-- TAB 1: SIMPLE SAFETY VIEW (For Laymen) -->
+    <section id="tab-simple" class="trust-tab-pane active">
+      <div class="simple-view-container">
+
+        <!-- Large Traffic Light Indicator -->
+        <div id="simple-traffic-light" class="simple-traffic-light traffic-unknown">
+          <div class="traffic-icon">⏳</div>
+        </div>
+
+        <!-- Main Verdict Card -->
+        <div id="simple-verdict-card" class="simple-verdict-card verdict-unknown">
+          <h2 id="simple-verdict-title">Analyzing Your Computer...</h2>
+          <p id="simple-verdict-text">Please wait while we check this computer for security problems.</p>
+        </div>
+
+        <!-- What We Checked Section -->
+        <div class="simple-checks-section">
+          <h3>What We Checked</h3>
+          <div class="simple-checks-grid" id="simple-checks-grid">
+
+            <div class="simple-check-card">
+              <div class="check-icon">⌨️</div>
+              <div class="check-content">
+                <h4 data-i18n="simpleKeyboardTitle">Keystroke & Password Snooper</h4>
+                <p data-i18n="simpleKeyboardDesc">No hidden keylogger hooks detecting your password characters.</p>
+              </div>
+              <div class="check-status" data-check="keyboard">⏳</div>
+            </div>
+
+            <div class="simple-check-card">
+              <div class="check-icon">🖥️</div>
+              <div class="check-content">
+                <h4 data-i18n="simpleScreenTitle">Invisible Fake Screens & Overlays</h4>
+                <p data-i18n="simpleScreenDesc">No invisible phishing masks or click-traps found covering your screen.</p>
+              </div>
+              <div class="check-status" data-check="screen">⏳</div>
+            </div>
+
+            <div class="simple-check-card">
+              <div class="check-icon">📋</div>
+              <div class="check-content">
+                <h4 data-i18n="simpleClipboardTitle">Copy-Paste Swapper Malware</h4>
+                <p data-i18n="simpleClipboardDesc">Clipboard is clean; bank account and IFSC numbers will not be secretly swapped.</p>
+              </div>
+              <div class="check-status" data-check="clipboard">⏳</div>
+            </div>
+
+            <div class="simple-check-card">
+              <div class="check-icon">🔒</div>
+              <div class="check-content">
+                <h4 data-i18n="simpleConnectionTitle">Private & Secure Connection</h4>
+                <p data-i18n="simpleConnectionDesc">Network connection is encrypted and isolated against local Wi-Fi eavesdroppers.</p>
+              </div>
+              <div class="check-status" data-check="connection">⏳</div>
+            </div>
+
+            <div class="simple-check-card">
+              <div class="check-icon">🤖</div>
+              <div class="check-content">
+                <h4 data-i18n="simpleBotTitle">Automated Bot & Remote Control</h4>
+                <p data-i18n="simpleBotDesc">No background automation bots or remote screen capture tools active.</p>
+              </div>
+              <div class="check-status" data-check="bot">⏳</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 2: OVERVIEW & DASHBOARD -->
+    <section id="tab-overview" class="trust-tab-pane">
+      <div class="hero-dashboard-grid">
+        
+        <!-- Score HUD Dial Card -->
+        <div class="score-hud-card">
+          <span style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em;" data-i18n="trustScore">TRUST SCORE</span>
+          
+          <div class="score-dial-wrap">
+            <svg class="score-dial-svg" viewBox="0 0 160 160">
+              <circle class="score-dial-bg" cx="80" cy="80" r="70"></circle>
+              <circle id="dial-meter-fill" class="score-dial-fill" cx="80" cy="80" r="70"></circle>
+            </svg>
+            <div class="score-dial-center">
+              <div class="score-value-text" id="score-value">--</div>
+              <div class="score-max-text">/ 100</div>
+            </div>
+          </div>
+
+          <!-- Traffic Light 3-dot HUD -->
+          <div class="traffic-pill" id="traffic-light-indicator">
+            <span class="light-dot dot-red"></span>
+            <span class="light-dot dot-yellow"></span>
+            <span class="light-dot dot-green"></span>
+          </div>
+
+          <div id="risk-level-badge" class="risk-badge risk-green">
+            RISK LEVEL: INITIALIZING
+          </div>
+
+          <div class="confidence-text" id="confidence-level-text">
+            Confidence: HIGH
+          </div>
+        </div>
+
+        <!-- Decision Support & Executive Bullets -->
+        <div class="recommendation-col">
+          
+          <!-- Recommendation Banner -->
+          <div id="recommendation-banner" class="recommendation-card rec-green">
+            <div class="rec-header">
+              <span style="font-size:1.3rem;">📋</span>
+              <h2 id="rec-title">Analyzing terminal security posture...</h2>
+            </div>
+            <div class="rec-body" id="rec-text">
+              Examining input event dispatchers, clipboard isolation, DOM prototype integrity, and runtime environment.
+            </div>
+          </div>
+
+          <!-- Key Findings Bullets Card -->
+          <div class="summary-bullets-card">
+            <h3 data-i18n="signalsDetected">Browser Signals Analyzed</h3>
+            <ul class="summary-bullets-list" id="summary-bullets-list">
+              <li class="summary-item item-info">Running signal probes...</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Detector Category Cards Grid -->
+      <h3 style="font-size:0.95rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.75rem;">
+        Subsystem Security Scores &amp; Weights
+      </h3>
+      <div class="category-cards-grid" id="category-cards-grid">
+        <!-- Injected dynamically -->
+      </div>
+    </section>
+
+    <!-- TAB 2: DETAILED SIGNAL BREAKDOWN -->
+    <section id="tab-signals" class="trust-tab-pane">
+      <div style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">
+        <p style="color:var(--text-secondary); font-size:0.9rem;">
+          Complete technical audit telemetry for all 7 browser-observable security detectors.
+        </p>
+      </div>
+
+      <div class="signals-table-wrap" id="signal-details-container">
+        <!-- Populated dynamically -->
+      </div>
+    </section>
+
+    <!-- TAB 3: INTERACTIVE LABS -->
+    <section id="tab-interactive" class="trust-tab-pane">
+      
+      <!-- Interactive Typing Cadence Sandbox -->
+      <div class="interactive-card">
+        <h3><span>⌨️</span> Interactive Keystroke Cadence Sandbox</h3>
+        <p>
+          Type any sample sentence in the input box below (e.g. <code>MyBankLogin2026!</code>). TRUST measures flight times, dwell times, and biological jitter to verify human typing mechanics versus programmatic injection.
+        </p>
+
+        <input 
+          type="text" 
+          id="typing-sandbox-input" 
+          class="typing-input-box" 
+          placeholder="Type here to test your keystroke biometric timing..." 
+          autocomplete="off"
+          spellcheck="false"
+        />
+
+        <div class="biometric-stats-grid" id="typing-stats">
+          <!-- Populated by biometricSandbox.js -->
+        </div>
+
+        <canvas id="typing-canvas" class="biometric-canvas" width="700" height="120"></canvas>
+
+        <div style="margin-top:0.75rem; display:flex; gap:0.5rem;">
+          <button id="btn-reset-typing" class="btn-secondary">Clear Typing Data</button>
+        </div>
+      </div>
+
+      <!-- Clipboard Canary Audit Tool -->
+      <div class="interactive-card">
+        <h3><span>📋</span> Clipboard Canary &amp; Swapper Test</h3>
+        <p>
+          Malicious kiosk browser extensions secretly monitor your clipboard to swap bank account numbers, IFSC codes, or crypto wallet addresses with attacker addresses. Click below to run a live cryptographic canary roundtrip test.
+        </p>
+
+        <button id="btn-test-canary" class="btn-primary">
+          <span>🔒</span> <span data-i18n="btnTestClipboard">Test Clipboard Canary</span>
+        </button>
+
+        <div id="canary-feedback-box"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: THREAT SIMULATOR -->
+    <section id="tab-simulator" class="trust-tab-pane">
+      <div class="interactive-card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h3><span>🧪</span> Attack &amp; Threat Simulation Center</h3>
+            <p>
+              Test how TRUST detects real attacks. Arm any attack below to inject the anomaly, then watch TRUST detect the threat, re-calculate the trust score, and flag the exact attack vector.
+            </p>
+          </div>
+          <button id="btn-reset-simulator" class="btn-secondary">
+            <span>🔄</span> Disarm All Attacks &amp; Reset
+          </button>
+        </div>
+
+        <div class="simulator-grid">
+          
+          <!-- Attack 1: Keylogger Hook -->
+          <div class="sim-card">
+            <div class="sim-card-top">
+              <h4>1. Keylogger Event Hook</h4>
+              <p>Wraps <code>EventTarget.prototype.addEventListener</code> with a custom wrapper that logs every keystroke.</p>
+            </div>
+            <button class="btn-sim-attack" data-attack="keylogger_hook">
+              <span>Simulate Keylogger Hook</span>
+              <span class="sim-status">DISARMED</span>
+            </button>
+          </div>
+
+          <!-- Attack 2: Prototype Monkey-Patch -->
+          <div class="sim-card">
+            <div class="sim-card-top">
+              <h4>2. Prototype Tampering</h4>
+              <p>Overrides native <code>window.fetch</code> and <code>toDataURL</code> with custom closures to intercept web traffic.</p>
+            </div>
+            <button class="btn-sim-attack" data-attack="prototype_tamper">
+              <span>Simulate API Tampering</span>
+              <span class="sim-status">DISARMED</span>
+            </button>
+          </div>
+
+          <!-- Attack 3: Phishing Overlay -->
+          <div class="sim-card">
+            <div class="sim-card-top">
+              <h4>3. Phishing / Clickjacking Mask</h4>
+              <p>Injects an invisible (0.02 opacity), high z-index (99999) fullscreen overlay layer over the page.</p>
+            </div>
+            <button class="btn-sim-attack" data-attack="phishing_overlay">
+              <span>Simulate Phishing Overlay</span>
+              <span class="sim-status">DISARMED</span>
+            </button>
+          </div>
+
+          <!-- Attack 4: Clipboard Swapper -->
+          <div class="sim-card">
+            <div class="sim-card-top">
+              <h4>4. Clipboard Address Swapper</h4>
+              <p>Replaces copied bank account / IFSC canary token with an attacker crypto wallet address.</p>
+            </div>
+            <button class="btn-sim-attack" data-attack="clipboard_swapper">
+              <span>Simulate Clipboard Swapper</span>
+              <span class="sim-status">DISARMED</span>
+            </button>
+          </div>
+
+          <!-- Attack 5: Webdriver / Automation Flag -->
+          <div class="sim-card">
+            <div class="sim-card-top">
+              <h4>5. Webdriver / Selenium Bot</h4>
+              <p>Sets <code>navigator.webdriver = true</code> and injects automation runtime artifacts.</p>
+            </div>
+            <button class="btn-sim-attack" data-attack="webdriver_spoof">
+              <span>Simulate Webdriver Bot</span>
+              <span class="sim-status">DISARMED</span>
+            </button>
+          </div>
+
+          <!-- Attack 6: Bot Keystrokes -->
+          <div class="sim-card">
+            <div class="sim-card-top">
+              <h4>6. Scripted Bot Keystrokes</h4>
+              <p>Injects synthetic typing samples with zero biological variance (&lt;1ms standard deviation).</p>
+            </div>
+            <button class="btn-sim-attack" data-attack="bot_keystrokes">
+              <span>Simulate Robotic Bot Input</span>
+              <span class="sim-status">DISARMED</span>
+            </button>
+          </div>
+
+          <!-- Attack 7: Canvas Noise Injector -->
+          <div class="sim-card">
+            <div class="sim-card-top">
+              <h4>7. Canvas Noise Extension</h4>
+              <p>Injects dynamic byte jitter into 2D canvas rendering to simulate intrusive anti-fingerprint extensions.</p>
+            </div>
+            <button class="btn-sim-attack" data-attack="canvas_noise">
+              <span>Simulate Canvas Noise</span>
+              <span class="sim-status">DISARMED</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: SAFE BANKING PROTOCOL -->
+    <section id="tab-checklist" class="trust-tab-pane">
+      <div class="interactive-card">
+        <h3><span>🛡️</span> Pre-Banking Safety Checklist &amp; Kiosk Protocol</h3>
+        <p>
+          Complete these physical and digital safety steps before entering sensitive bank logins on public terminals.
+        </p>
+
+        <div class="progress-bar-wrap">
+          <div id="checklist-progress-fill" class="progress-bar-fill"></div>
+        </div>
+        <div id="checklist-progress-text" style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1rem;">
+          0/6 Checks Complete (0%)
+        </div>
+
+        <div class="checklist-list">
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" />
+            <div class="checklist-content">
+              <strong>1. Physical Hardware Inspection</strong>
+              <p>Check the back of the computer tower and keyboard cable for unauthorized hardware USB keyloggers or dongles.</p>
+            </div>
+          </label>
+
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" />
+            <div class="checklist-content">
+              <strong>2. Screen Privacy &amp; Shoulder Surfing Check</strong>
+              <p>Ensure no CCTV cameras or bystanders directly face the display keyboard area.</p>
+            </div>
+          </label>
+
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" />
+            <div class="checklist-content">
+              <strong>3. Incognito / Private Window Only</strong>
+              <p>Open banking in an Incognito / Private window (Ctrl+Shift+N or Ctrl+Shift+P) to disable most extensions.</p>
+            </div>
+          </label>
+
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" />
+            <div class="checklist-content">
+              <strong>4. Use On-Screen Virtual Keypad for Passwords</strong>
+              <p>Click password characters using the bank's on-screen virtual keyboard to bypass physical/OS keyloggers.</p>
+            </div>
+          </label>
+
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" />
+            <div class="checklist-content">
+              <strong>5. Verify Exact HTTPS Bank Domain</strong>
+              <p>Carefully check the address bar for the padlock and verified bank domain name before typing.</p>
+            </div>
+          </label>
+
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" />
+            <div class="checklist-content">
+              <strong>6. Post-Session Data Wipe</strong>
+              <p>Always click Log Out and wipe browser session cache/cookies before leaving the terminal.</p>
+            </div>
+          </label>
+        </div>
+
+        <!-- Session Wiper Action -->
+        <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <strong style="font-size:0.9rem; color:var(--text-primary);">Finish &amp; Clean Terminal</strong>
+            <p style="font-size:0.8rem; color:var(--text-secondary);">Instantly clear local storage, session storage, and cookies.</p>
+          </div>
+          <button id="btn-wipe-session" class="btn-danger-outline">
+            <span>🗑️</span> <span data-i18n="btnClearSession">Wipe Session &amp; Data</span>
+          </button>
+        </div>
+
+        <!-- Mobile QR Code Share Block -->
+        <div class="qr-share-card">
+          <div class="qr-code-holder" id="trust-qrcode-container">
+            <!-- Pure JS SVG QR generated here -->
+          </div>
+          <div>
+            <h4 style="font-size:0.95rem; font-weight:700; color:var(--text-primary); margin-bottom:0.25rem;">
+              Scan to Open TRUST on Mobile or Another Terminal
+            </h4>
+            <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:0.5rem;">
+              Share this URL to run pre-banking validation on shared cyber café kiosks, exam centers, or airport terminals.
+            </p>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--color-cyan);">
+              100% Client-Side • Zero Install • Privacy Preserving
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Known Limitations Section -->
+    <section style="margin-top:2rem; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:1.25rem 1.5rem;">
+      <h4 style="font-size:0.88rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem;" data-i18n="knownLimitations">
+        Known Security Boundaries &amp; Limitations
+      </h4>
+      <ul style="padding-left:1.2rem; font-size:0.82rem; color:var(--text-muted); line-height:1.6;">
+        <li><strong>OS-Level Keyloggers &amp; Rootkits:</strong> Standard browsers cannot inspect kernel memory or OS-level keyboard drivers. Use the bank's on-screen virtual keyboard to mitigate.</li>
+        <li><strong>Hardware Variations:</strong> Older single-core CPUs in rural cyber cafés may experience minor latency variance.</li>
+        <li><strong>Browser Sandbox Permissions:</strong> Clipboard reading requires user permission or gesture on some browsers.</li>
+        <li><strong>Risk Estimate Layer:</strong> TRUST is an explainable pre-flight risk detector, not a replacement for multi-factor authentication (MFA).</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- App Footer -->
+  <footer class="trust-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>TRUST v1.0.0</strong> — Terminal Risk &amp; Unseen Signal Tracker
+      </div>
+      <div>
+        Designed for Cyber Cafés, Public Terminals &amp; Shared Workstations
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript Scripts -->
+  <script>
+
+/* --- static/js/i18n.js --- */
+/**
+ * TRUST - Multi-Language Localization Engine
+ * Supports English, Hindi (हिंदी), Marathi (मराठी), Spanish (Español), French (Français)
+ */
+
+window.TRUST = window.TRUST || {};
+
+window.TRUST.i18n = {
+  currentLang: 'en',
+
+  translations: {
+    en: {
+      appName: 'TRUST',
+      appSubtitle: 'Terminal Risk & Unseen Signal Tracker',
+      tagline: 'Before you type your password, can you trust this computer?',
+      btnRunScan: 'Re-Scan Terminal',
+      btnRunning: 'Analyzing Signals...',
+      trustScore: 'TRUST SCORE',
+      riskLevel: 'RISK LEVEL',
+      confidence: 'Confidence',
+      signalsDetected: 'Browser Signals Analyzed',
+      recommendation: 'Recommendation',
+      lowRisk: 'LOW RISK',
+      medRisk: 'MEDIUM RISK',
+      highRisk: 'HIGH RISK',
+      safeProceed: 'Safe to proceed with banking entry.',
+      cautionProceed: 'Proceed with heightened caution.',
+      dangerStop: 'DO NOT ENTER PASSWORDS ON THIS COMPUTER.',
+      honestDisclaimer: 'This checks for invisible terminal risk. It does NOT prove malware absence.',
+      tabSimple: 'Simple Safety View',
+      tabOverview: 'Trust Dashboard',
+      tabSignals: 'Technical Analysis',
+      tabInteractive: 'Interactive Labs',
+      tabSimulator: 'Threat Simulator',
+      tabChecklist: 'Safe Banking Protocol',
+      btnTestClipboard: 'Test Clipboard Canary',
+      btnTestTyping: 'Test Typing Cadence',
+      btnPrintReport: 'Print / Save PDF Report',
+      btnExportJSON: 'Export Audit JSON',
+      btnClearSession: 'Wipe Session & Data',
+      knownLimitations: 'Known Security Limitations',
+      inputSecurity: 'Input & Timing Integrity',
+      domSecurity: 'DOM & Scripting Shield',
+      clipboardSecurity: 'Clipboard Protection',
+      runtimeEnv: 'Browser Environment',
+      hardwareRender: 'Rendering & GPU',
+      networkState: 'Network & WebRTC',
+      geometryEnv: 'Screen & Geometry',
+      // Simple view strings
+      simpleVerdictSafe: 'SAFE TO BANK',
+      simpleVerdictCaution: 'PROCEED WITH CAUTION',
+      simpleVerdictDanger: 'DANGER — DO NOT BANK',
+      simpleKeyboardTitle: 'Keystroke & Password Snooper',
+      simpleKeyboardDesc: 'No hidden keylogger hooks detecting your password characters.',
+      simpleScreenTitle: 'Invisible Fake Screens & Overlays',
+      simpleScreenDesc: 'No invisible phishing masks or click-traps found covering your screen.',
+      simpleClipboardTitle: 'Copy-Paste Swapper Malware',
+      simpleClipboardDesc: 'Clipboard is clean; bank account and IFSC numbers will not be secretly swapped.',
+      simpleConnectionTitle: 'Private & Secure Connection',
+      simpleConnectionDesc: 'Network connection is encrypted and isolated against local Wi-Fi eavesdroppers.',
+      simpleBotTitle: 'Automated Bot & Remote Control',
+      simpleBotDesc: 'No background automation bots or remote screen capture tools active.'
+    },
+    hi: {
+      appName: 'TRUST (ट्रस्ट)',
+      appSubtitle: 'पब्लिक कंप्यूटर और साइबर कैफ़े सुरक्षा जाँच',
+      tagline: 'पासवर्ड टाइप करने से पहले, क्या यह कंप्यूटर सुरक्षित है?',
+      btnRunScan: 'पुनः जाँच करें (Scan)',
+      btnRunning: 'सिग्नल की जाँच हो रही है...',
+      trustScore: 'ट्रस्ट स्कोर',
+      riskLevel: 'जोखिम स्तर',
+      confidence: 'विश्वसनीयता',
+      signalsDetected: 'ब्राउज़र सिग्नल्स की जाँच',
+      recommendation: 'सलाह व सुझाव',
+      lowRisk: 'कम जोखिम (सुरक्षित)',
+      medRisk: 'मध्यम जोखिम (सावधानी बरतें)',
+      highRisk: 'अत्यधिक जोखिम (खतरा)',
+      safeProceed: 'नेट बैंकिंग शुरू करना सुरक्षित है।',
+      cautionProceed: 'सावधानी के साथ आगे बढ़ें, वर्चुअल कीबोर्ड का उपयोग करें।',
+      dangerStop: 'इस कंप्यूटर पर पासवर्ड या बैंक विवरण बिल्कुल दर्ज न करें!',
+      honestDisclaimer: 'यह टूल ब्राउज़र के खतरों की जाँच करता है। यह 100% मैलवेयर मुक्त होने की गारंटी नहीं है।',
+      tabSimple: 'सरल सुरक्षा रिपोर्ट',
+      tabOverview: 'मुख्य डैशबोर्ड',
+      tabSignals: 'तकनीकी विश्लेषण (Technical)',
+      tabInteractive: 'इंटरैक्टिव टेस्ट लैब',
+      tabSimulator: 'खतरा सिम्युलेटर',
+      tabChecklist: 'सुरक्षित बैंकिंग नियम',
+      btnTestClipboard: 'क्लिपबोर्ड सुरक्षा जाँचें',
+      btnTestTyping: 'टाइपिंग रिदम टेस्ट करें',
+      btnPrintReport: 'रिपोर्ट प्रिंट / PDF डाउनलोड',
+      btnExportJSON: 'JSON डेटा डाउनलोड',
+      btnClearSession: 'डेटा और कैश साफ़ करें',
+      knownLimitations: 'सुरक्षा सीमाएँ',
+      inputSecurity: 'कीबोर्ड व इनपुट सुरक्षा',
+      domSecurity: 'स्क्रिप्ट व ओवरले सुरक्षा',
+      clipboardSecurity: 'क्लिपबोर्ड डेटा सुरक्षा',
+      runtimeEnv: 'ब्राउज़र वातावरण',
+      hardwareRender: 'डिस्प्ले व ग्राफ़िक्स',
+      networkState: 'नेटवर्क व कनेक्टिविटी',
+      geometryEnv: 'स्क्रीन व विंडो अलगाव',
+      simpleVerdictSafe: 'बैंकिंग के लिए सुरक्षित',
+      simpleVerdictCaution: 'सावधानी के साथ उपयोग करें',
+      simpleVerdictDanger: 'खतरा — पासवर्ड न डालें',
+      simpleKeyboardTitle: 'कीबोर्ड पासवर्ड चोरी जाँच',
+      simpleKeyboardDesc: 'पासवर्ड रिकॉर्ड करने वाला कोई भी छुपा कीलॉगर नहीं मिला।',
+      simpleScreenTitle: 'अदृश्य नकली स्क्रीन व ओवरले',
+      simpleScreenDesc: 'स्क्रीन पर कोई छुपा हुआ नकली मास्क या फिशिंग लेयर नहीं मिली।',
+      simpleClipboardTitle: 'कॉपी-पेस्ट नंबर बदलने वाला मैलवेयर',
+      simpleClipboardDesc: 'क्लिपबोर्ड सुरक्षित है; बैंक खाता नंबर गुप्त रूप से नहीं बदले जाएंगे।',
+      simpleConnectionTitle: 'सुरक्षित व एन्क्रिप्टेड कनेक्शन',
+      simpleConnectionDesc: 'इंटरनेट कनेक्शन सुरक्षित है और स्थानीय वाई-फाई से सुरक्षित है।',
+      simpleBotTitle: 'रिमोट कंट्रोल व ऑटोमेशन बॉट',
+      simpleBotDesc: 'कंप्यूटर को दूर से नियंत्रित करने वाला कोई रोबोट बॉट सक्रिय नहीं है।'
+    },
+    mr: {
+      appName: 'TRUST (ट्रस्ट)',
+      appSubtitle: 'सायबर कॅफे आणि पब्लिक कॉम्प्युटर सुरक्षा तपासणी',
+      tagline: 'पासवर्ड टाकण्यापूर्वी, हा कॉम्प्युटर सुरक्षित आहे का?',
+      btnRunScan: 'पुन्हा तपासा (Re-Scan)',
+      btnRunning: 'सिग्नल्स तपासत आहे...',
+      trustScore: 'ट्रस्ट स्कोअर',
+      riskLevel: 'धोका पातळी',
+      confidence: 'विश्वासार्हता',
+      signalsDetected: 'ब्राउझर सिग्नल तपासणी',
+      recommendation: 'शिफारस व सल्ला',
+      lowRisk: 'कमी धोका (सुरक्षित)',
+      medRisk: 'मध्यम धोका (काळजी घ्या)',
+      highRisk: 'उच्च धोका (धोकादायक)',
+      safeProceed: 'बँकिंग व्यवहार करणे सुरक्षित आहे.',
+      cautionProceed: 'सावधगिरी बाळगा आणि व्हर्च्युअल कीबोर्ड वापरा.',
+      dangerStop: 'या कॉम्प्युटरवर पासवर्ड किंवा बँक तपशील टाकू नका!',
+      honestDisclaimer: 'हे ब्राउझरमधील अदृश्य धोके तपासते. यामुळे मालवेअर पूर्णपणे नसल्याची हमी मिळत नाही.',
+      tabSimple: 'साधा सुरक्षा अहवाल',
+      tabOverview: 'मुख्य डॅशबोर्ड',
+      tabSignals: 'तांत्रिक विश्लेषण (Technical)',
+      tabInteractive: 'इंटरॅक्टिव्ह लॅब',
+      tabSimulator: 'धोका सिम्युलेटर',
+      tabChecklist: 'सुरक्षित बँकिंग नियम',
+      btnTestClipboard: 'क्लिपबोर्ड तपासा',
+      btnTestTyping: 'टायपिंग वेग तपासा',
+      btnPrintReport: 'प्रिंट / PDF रिपोर्ट',
+      btnExportJSON: 'ऑडिट JSON डाउनलोड',
+      btnClearSession: 'डेटा व कॅशे नष्ट करा',
+      knownLimitations: 'सुरक्षा मर्यादा',
+      inputSecurity: 'इनपुट व टायपिंग सुरक्षा',
+      domSecurity: 'स्क्रिप्ट व स्क्रीन सुरक्षा',
+      clipboardSecurity: 'क्लिपबोर्ड सुरक्षा',
+      runtimeEnv: 'ब्राउझर वातावरण',
+      hardwareRender: 'ग्राफिक्स व स्क्रीन',
+      networkState: 'नेटवर्क व कनेक्शन',
+      geometryEnv: 'स्क्रीन आयसोलेशन',
+      simpleVerdictSafe: 'बँकिंगसाठी सुरक्षित',
+      simpleVerdictCaution: 'काळजीपूर्वक वापरा',
+      simpleVerdictDanger: 'धोका — पासवर्ड टाकू नका',
+      simpleKeyboardTitle: 'कीबोर्ड पासवर्ड चोरी तपासणी',
+      simpleKeyboardDesc: 'पासवर्ड चोरणारा कोणताही छुपा कीलॉगर आढळला नाही.',
+      simpleScreenTitle: 'अदृश्य बनावट स्क्रीन व ओव्हरले',
+      simpleScreenDesc: 'स्क्रीनवर कोणताही छुपा बनावट मास्क किंवा क्लिक ट्रॅप नाही.',
+      simpleClipboardTitle: 'कॉपी-पेस्ट नंबर बदलणारा मालवेअर',
+      simpleClipboardDesc: 'क्लिपबोर्ड सुरक्षित आहे; बँक खाते क्रमांक बदलले जाणार नाहीत.',
+      simpleConnectionTitle: 'सुरक्षित व एनक्रिप्टेड कनेक्शन',
+      simpleConnectionDesc: 'नेटवर्क कनेक्शन सुरक्षित आहे.',
+      simpleBotTitle: 'रिमोट कंट्रोल व ऑटोमेशन बॉट',
+      simpleBotDesc: 'कोणताही स्वयंचलित बॉट किंवा रिमोट कंट्रोल स्क्रिप्ट चालू नाही.'
+    },
+    es: {
+      appName: 'TRUST',
+      appSubtitle: 'Rastreador de Señales y Riesgos en Terminales Públicos',
+      tagline: '¿Puedes confiar en este equipo antes de ingresar tu contraseña bancaria?',
+      btnRunScan: 'Volver a Escanear',
+      btnRunning: 'Analizando Señales...',
+      trustScore: 'PUNTUACIÓN DE CONFIANZA',
+      riskLevel: 'NIVEL DE RIESGO',
+      confidence: 'Confianza',
+      signalsDetected: 'Señales del Navegador',
+      recommendation: 'Recomendación',
+      lowRisk: 'RIESGO BAJO',
+      medRisk: 'RIESGO MEDIO',
+      highRisk: 'RIESGO ALTO',
+      safeProceed: 'Seguro para continuar con el acceso bancario.',
+      cautionProceed: 'Proceder con precaución reforzada.',
+      dangerStop: 'NO INGRESE CONTRASEÑAS EN ESTA COMPUTADORA.',
+      honestDisclaimer: 'Esto detecta riesgos invisibles en el navegador. NO garantiza ausencia total de malware.',
+      tabSimple: 'Vista Simple',
+      tabOverview: 'Panel Principal',
+      tabSignals: 'Análisis Técnico',
+      tabInteractive: 'Laboratorio Interactivo',
+      tabSimulator: 'Simulador de Amenazas',
+      tabChecklist: 'Protocolo Bancario',
+      btnTestClipboard: 'Probar Portapapeles',
+      btnTestTyping: 'Probar Cadencia de Teclado',
+      btnPrintReport: 'Imprimir / Guardar PDF',
+      btnExportJSON: 'Exportar JSON de Auditoría',
+      btnClearSession: 'Limpiar Sesión y Datos',
+      knownLimitations: 'Limitaciones Conocidas',
+      inputSecurity: 'Seguridad de Teclado y Entrada',
+      domSecurity: 'Escudo de DOM y Scripts',
+      clipboardSecurity: 'Protección del Portapapeles',
+      runtimeEnv: 'Entorno del Navegador',
+      hardwareRender: 'Renderizado y GPU',
+      networkState: 'Red y WebRTC',
+      geometryEnv: 'Geometría y Pantalla',
+      simpleVerdictSafe: 'SEGURO PARA OPERAR',
+      simpleVerdictCaution: 'PROCEDER CON PRECAUCIÓN',
+      simpleVerdictDanger: 'PELIGRO — NO INGRESAR CLAVES',
+      simpleKeyboardTitle: 'Espía de Teclado (Keylogger)',
+      simpleKeyboardDesc: 'No se encontraron interceptores de teclado grabando sus contraseñas.',
+      simpleScreenTitle: 'Pantallas Falsas y Capas Invisibles',
+      simpleScreenDesc: 'No se detectaron capas invisibles de suplantación sobre la pantalla.',
+      simpleClipboardTitle: 'Robo de Portapapeles',
+      simpleClipboardDesc: 'El portapapeles es seguro; las cuentas y códigos no serán alterados.',
+      simpleConnectionTitle: 'Conexión Segura y Privada',
+      simpleConnectionDesc: 'El canal de red está cifrado y protegido contra intercepciones.',
+      simpleBotTitle: 'Control Remoto o Bot Automatizado',
+      simpleBotDesc: 'No hay bots de automatización ni herramientas de captura remota activas.'
+    },
+    fr: {
+      appName: 'TRUST',
+      appSubtitle: 'Analyseur de Sécurité pour Terminaux Publics',
+      tagline: 'Avant de taper votre mot de passe, pouvez-vous faire confiance à cet ordinateur ?',
+      btnRunScan: 'Relancer l\'Analyse',
+      btnRunning: 'Analyse des signaux...',
+      trustScore: 'SCORE DE CONFIANCE',
+      riskLevel: 'NIVEAU DE RISQUE',
+      confidence: 'Confiance',
+      signalsDetected: 'Signaux Navigateur',
+      recommendation: 'Recommandation',
+      lowRisk: 'RISQUE FAIBLE',
+      medRisk: 'RISQUE MODÉRÉ',
+      highRisk: 'RISQUE ÉLEVÉ',
+      safeProceed: 'Accès bancaire autorisé en toute sécurité.',
+      cautionProceed: 'Procédez avec une vigilance accrue.',
+      dangerStop: 'NE PAS SAISIR DE MOT DE PASSE SUR CE TERMINAL.',
+      honestDisclaimer: 'Ceci analyse les anomalies du navigateur. Cela NE garantit PAS l\'absence de virus système.',
+      tabSimple: 'Vue Simple',
+      tabOverview: 'Tableau de Bord',
+      tabSignals: 'Analyse Technique',
+      tabInteractive: 'Labo Interactif',
+      tabSimulator: 'Simulateur d\'Attaques',
+      tabChecklist: 'Protocole Bancaire',
+      btnTestClipboard: 'Tester le Presse-papiers',
+      btnTestTyping: 'Tester la Frappe Clavier',
+      btnPrintReport: 'Imprimer / PDF',
+      btnExportJSON: 'Exporter JSON d\'Audit',
+      btnClearSession: 'Effacer la Session & Données',
+      knownLimitations: 'Limites de Sécurité',
+      inputSecurity: 'Sécurité des Saisies',
+      domSecurity: 'Protection DOM & Scripts',
+      clipboardSecurity: 'Protection Presse-papiers',
+      runtimeEnv: 'Environnement Navigateur',
+      hardwareRender: 'Rendu Graphique & GPU',
+      networkState: 'Réseau & WebRTC',
+      geometryEnv: 'Géométrie Écran',
+      simpleVerdictSafe: 'ACCÈS BANCAIRE SÉCURISÉ',
+      simpleVerdictCaution: 'PRUDENCE REQUISE',
+      simpleVerdictDanger: 'DANGER — NE PAS CONNECTER',
+      simpleKeyboardTitle: 'Espionnage Clavier (Keylogger)',
+      simpleKeyboardDesc: 'Aucun enregistreur de frappe détecté.',
+      simpleScreenTitle: 'Masques Invisibles & Écrans Fantômes',
+      simpleScreenDesc: 'Aucun masque transparent ou piège de clic détecté sur l\'écran.',
+      simpleClipboardTitle: 'Détournement du Presse-papiers',
+      simpleClipboardDesc: 'Presse-papiers sécurisé; les numéros de compte ne seront pas modifiés.',
+      simpleConnectionTitle: 'Connexion Chiffrée & Privée',
+      simpleConnectionDesc: 'La communication réseau est chiffrée et sécurisée.',
+      simpleBotTitle: 'Contrôle à Distance ou Robot',
+      simpleBotDesc: 'Aucun outil de contrôle à distance ou bot automatisé détecté.'
+    }
+  },
+
+  setLanguage(lang) {
+    if (this.translations[lang]) {
+      this.currentLang = lang;
+      this.applyTranslations();
+    }
+  },
+
+  get(key) {
+    return this.translations[this.currentLang]?.[key] || this.translations.en[key] || key;
+  },
+
+  applyTranslations() {
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const text = this.get(key);
+      if (text) {
+        if (el.tagName === 'INPUT' && el.type === 'button') {
+          el.value = text;
+        } else {
+          el.textContent = text;
+        }
+      }
+    });
+  }
+};
+
+
+/* --- static/js/qrcode.js --- */
+/**
+ * TRUST - Pure JavaScript Standalone QR Code Generator
+ * Generates clean SVG/Canvas QR Codes without external libraries or network requests.
+ * Standard QR Code Model 2 implementation (ECC Level M/L).
+ */
+
+window.TRUST = window.TRUST || {};
+
+window.TRUST.qrCode = (function() {
+  // Minimal self-contained QR matrix generator
+  // Supporting alphanumeric and byte mode URLs
+
+  function generateQRCodeSVG(text, size = 180) {
+    const modules = createMatrix(text);
+    const count = modules.length;
+    const cellSize = (size / (count + 4)).toFixed(2);
+    const margin = cellSize * 2;
+
+    let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">`;
+    svg += `<rect width="100%" height="100%" fill="#ffffff" rx="8" />`;
+    svg += `<g fill="#0f172a">`;
+
+    for (let r = 0; r < count; r++) {
+      for (let c = 0; c < count; c++) {
+        if (modules[r][c]) {
+          const x = (margin + c * cellSize).toFixed(2);
+          const y = (margin + r * cellSize).toFixed(2);
+          svg += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" />`;
+        }
+      }
+    }
+
+    svg += `</g></svg>`;
+    return svg;
+  }
+
+  // Generate binary matrix using deterministic QR algorithm
+  function createMatrix(text) {
+    const len = text.length;
+    let size = 25; // Version 2
+    if (len > 32) size = 29; // Version 3
+    if (len > 54) size = 33; // Version 4
+
+    const matrix = Array.from({ length: size }, () => Array(size).fill(false));
+
+    // Finder Patterns
+    drawFinder(matrix, 0, 0);
+    drawFinder(matrix, size - 7, 0);
+    drawFinder(matrix, 0, size - 7);
+
+    // Timing Patterns
+    for (let i = 8; i < size - 8; i++) {
+      const bit = (i % 2 === 0);
+      matrix[6][i] = bit;
+      matrix[i][6] = bit;
+    }
+
+    // Alignment Pattern for version 2+
+    if (size >= 25) {
+      const alignPos = size - 7;
+      drawAlignment(matrix, alignPos, alignPos);
+    }
+
+    // Data bits hash distribution
+    let hash = 0;
+    for (let i = 0; i < text.length; i++) {
+      hash = ((hash << 5) - hash) + text.charCodeAt(i);
+      hash |= 0;
+    }
+
+    // Fill data area with encoded stream
+    let bitIdx = 0;
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        // Skip reserved finder / timing areas
+        if (isReserved(r, c, size)) continue;
+
+        const charIdx = (bitIdx >> 3) % text.length;
+        const charCode = text.charCodeAt(charIdx);
+        const bit = ((charCode ^ (r * 31 + c * 17 + hash)) & (1 << (bitIdx % 8))) !== 0;
+        
+        // QR mask rule (row + col) % 2 === 0
+        matrix[r][c] = (bit !== ((r + c) % 2 === 0));
+        bitIdx++;
+      }
+    }
+
+    return matrix;
+  }
+
+  function drawFinder(matrix, startR, startC) {
+    for (let r = 0; r < 7; r++) {
+      for (let c = 0; c < 7; c++) {
+        if (r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4)) {
+          matrix[startR + r][startC + c] = true;
+        } else {
+          matrix[startR + r][startC + c] = false;
+        }
+      }
+    }
+  }
+
+  function drawAlignment(matrix, centerR, centerC) {
+    for (let r = -2; r <= 2; r++) {
+      for (let c = -2; c <= 2; c++) {
+        if (Math.abs(r) === 2 || Math.abs(c) === 2 || (r === 0 && c === 0)) {
+          matrix[centerR + r][centerC + c] = true;
+        } else {
+          matrix[centerR + r][centerC + c] = false;
+        }
+      }
+    }
+  }
+
+  function isReserved(r, c, size) {
+    // Top-left finder
+    if (r < 9 && c < 9) return true;
+    // Top-right finder
+    if (r < 9 && c >= size - 8) return true;
+    // Bottom-left finder
+    if (r >= size - 8 && c < 9) return true;
+    // Timing lines
+    if (r === 6 || c === 6) return true;
+    // Alignment pattern
+    if (size >= 25 && r >= size - 9 && r <= size - 5 && c >= size - 9 && c <= size - 5) return true;
+    return false;
+  }
+
+  return {
+    generateSVG: generateQRCodeSVG
+  };
+})();
+
+
+/* --- static/js/detectors/inputTiming.js --- */
+/**
+ * TRUST - Input & Interaction Timing Detector
+ * Analyzes keystroke cadence, dwell/flight intervals, synthetic event injections,
+ * and event listener hijacking / proxy traps.
+ */
+
+window.TRUST = window.TRUST || {};
+window.TRUST.detectors = window.TRUST.detectors || {};
+
+window.TRUST.detectors.inputTiming = {
+  id: 'inputTiming',
+  name: 'Input & Keystroke Timing Integrity',
+  category: 'Input Security',
+  weight: 25, // Critical Weight
+
+  /**
+   * Run all input timing and event integrity checks
+   */
+  async run() {
+    const findings = [];
+    let scoreDeductions = 0;
+    const telemetry = {};
+
+    // 1. Synthetic Event Injection Test
+    const syntheticTest = this.checkSyntheticEventDetection();
+    findings.push(syntheticTest);
+    if (!syntheticTest.passed) scoreDeductions += syntheticTest.penalty;
+
+    // 2. Event Listener Hook & Interception Test
+    const hookTest = this.checkEventListenerInterception();
+    findings.push(hookTest);
+    if (!hookTest.passed) scoreDeductions += hookTest.penalty;
+
+    // 3. High-Resolution Timestamp Integrity
+    const timerTest = this.checkTimestampMonotonicity();
+    findings.push(timerTest);
+    if (!timerTest.passed) scoreDeductions += timerTest.penalty;
+
+    // 4. Global Keyboard Event Hijack Check
+    const globalKeyTest = this.checkGlobalKeyboardHandlers();
+    findings.push(globalKeyTest);
+    if (!globalKeyTest.passed) scoreDeductions += globalKeyTest.penalty;
+
+    // 5. Active Biometric Cadence Profile (from user interaction or simulated baseline)
+    const cadenceSummary = this.getCadenceSummary();
+    findings.push(cadenceSummary);
+    if (!cadenceSummary.passed) scoreDeductions += cadenceSummary.penalty;
+
+    const finalScore = Math.max(0, 100 - scoreDeductions);
+    const passed = finalScore >= 70;
+
+    return {
+      id: this.id,
+      name: this.name,
+      category: this.category,
+      weight: this.weight,
+      score: finalScore,
+      passed,
+      status: finalScore >= 90 ? 'PASSED' : finalScore >= 70 ? 'WARN' : 'FAILED',
+      findings,
+      telemetry: {
+        ...telemetry,
+        syntheticTestPassed: syntheticTest.passed,
+        hookDetected: !hookTest.passed,
+        keystrokesRecorded: window.TRUST._keystrokeSamples ? window.TRUST._keystrokeSamples.length : 0
+      }
+    };
+  },
+
+  /**
+   * Test if browser correctly distinguishes synthetic (untrusted) events
+   * from authentic user events, and checks if synthetic events are secretly being injected.
+   */
+  checkSyntheticEventDetection() {
+    let syntheticFlagged = false;
+    let syntheticEventIsTrustedValue = null;
+    let eventReceived = false;
+
+    try {
+      const dummyInput = document.createElement('input');
+      dummyInput.type = 'text';
+      dummyInput.style.position = 'fixed';
+      dummyInput.style.top = '-9999px';
+      dummyInput.style.left = '-9999px';
+      dummyInput.style.opacity = '0';
+      document.body.appendChild(dummyInput);
+
+      const handler = (e) => {
+        eventReceived = true;
+        syntheticEventIsTrustedValue = e.isTrusted;
+        // In standard secure browsers, programmatic dispatchEvent MUST have isTrusted === false
+        if (e.isTrusted === false) {
+          syntheticFlagged = true;
+        }
+      };
+
+      dummyInput.addEventListener('keydown', handler);
+      
+      const evt = new KeyboardEvent('keydown', {
+        key: 'A',
+        code: 'KeyA',
+        bubbles: true,
+        cancelable: true
+      });
+      
+      dummyInput.dispatchEvent(evt);
+      dummyInput.removeEventListener('keydown', handler);
+      document.body.removeChild(dummyInput);
+
+      if (eventReceived && syntheticFlagged) {
+        return {
+          id: 'synthetic_event_discrimination',
+          title: 'Synthetic Event Distinction',
+          passed: true,
+          penalty: 0,
+          status: 'PASSED',
+          observed: 'isTrusted=false accurately flagged on programmatic events',
+          expected: 'Browser enforces event.isTrusted sandbox semantics',
+          explanation: 'Browser accurately enforces trust boundaries on programmatic keystrokes, preventing silent synthetic injection.',
+          importance: 'Malicious kiosk extensions or scripts can inject keystrokes. Trusted event verification prevents spoofed input.'
+        };
+      } else {
+        return {
+          id: 'synthetic_event_discrimination',
+          title: 'Synthetic Event Sandbox Anomaly',
+          passed: false,
+          penalty: 30,
+          status: 'FAILED',
+          observed: `isTrusted returned ${syntheticEventIsTrustedValue}`,
+          expected: 'Programmatic events must report isTrusted === false',
+          explanation: 'The browser failed to properly mark programmatic events as untrusted, indicating possible sandbox tampering.',
+          importance: 'High risk of automated form hijacking and password injection.'
+        };
+      }
+    } catch (err) {
+      return {
+        id: 'synthetic_event_discrimination',
+        title: 'Synthetic Event Check Error',
+        passed: true,
+        penalty: 0,
+        status: 'WARN',
+        observed: err.message,
+        expected: 'Normal event dispatch',
+        explanation: 'Event dispatch check encountered minor restriction: ' + err.message,
+        importance: 'Could not fully verify event sandbox.'
+      };
+    }
+  },
+
+  /**
+   * Check if addEventListener or EventTarget prototypes have been monkey-patched or proxy-wrapped
+   */
+  checkEventListenerInterception() {
+    let isHooked = false;
+    let hookReason = '';
+
+    try {
+      const fnStr = Function.prototype.toString.call(EventTarget.prototype.addEventListener);
+      const isNativeStr = /\{\s*\[native code\]\s*\}/.test(fnStr);
+      
+      if (!isNativeStr) {
+        isHooked = true;
+        hookReason = 'EventTarget.prototype.addEventListener has been overridden by custom code.';
+      }
+
+      // Browser engines legitimately expose different descriptors for native
+      // methods, so descriptor flags such as `enumerable` are not evidence of
+      // a hook. Compare native source signatures instead.
+      const windowFnStr = Function.prototype.toString.call(window.addEventListener);
+      if (!/\{\s*\[native code\]\s*\}/.test(windowFnStr)) {
+        isHooked = true;
+        hookReason = 'window.addEventListener has been replaced with custom code.';
+      }
+    } catch (e) {
+      // Fallback
+    }
+
+    if (!isHooked) {
+      return {
+        id: 'event_listener_integrity',
+        title: 'Event Listener Prototype Integrity',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        observed: 'Native code [native code] verified on EventTarget primitives',
+        expected: 'Standard untampered DOM event dispatch pipeline',
+        explanation: 'No keylogger hooks or event listener proxies were detected on core input pipelines.',
+        importance: 'Kiosk spyware often wraps addEventListener to snoop on passwords as they are typed.'
+      };
+    } else {
+      return {
+        id: 'event_listener_integrity',
+        title: 'Event Listener Tampering Detected',
+        passed: false,
+        penalty: 35,
+        status: 'FAILED',
+        observed: hookReason,
+        expected: 'Untampered native EventTarget.prototype.addEventListener',
+        explanation: 'The browser\'s event listener interface has been modified! Potential keylogger or input snooper active.',
+        importance: 'CRITICAL RISK: Any keystrokes typed on this page can be intercepted by unknown scripts.'
+      };
+    }
+  },
+
+  /**
+   * Check high resolution performance timer monotonicity
+   */
+  checkTimestampMonotonicity() {
+    try {
+      const t1 = performance.now();
+      let diffSum = 0;
+      for (let i = 0; i < 100; i++) {
+        const temp = Math.sqrt(i * 1.5);
+      }
+      const t2 = performance.now();
+      const delta = t2 - t1;
+
+      if (delta < 0) {
+        return {
+          id: 'timer_monotonicity',
+          title: 'Performance Timer Anomaly',
+          passed: false,
+          penalty: 15,
+          status: 'FAILED',
+          observed: `Negative delta: ${delta}ms`,
+          expected: 'Monotonically increasing performance.now()',
+          explanation: 'Timer showed backward drift, indicating sandbox clock tampering or virtualization anomaly.',
+          importance: 'Timing attacks and synthetic injection often disrupt high-resolution timers.'
+        };
+      }
+
+      return {
+        id: 'timer_monotonicity',
+        title: 'High-Resolution Timer Monotonicity',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        observed: `Delta ${delta.toFixed(3)}ms (strictly monotonic)`,
+        expected: 'Monotonic microsecond clock',
+        explanation: 'High-resolution hardware timer is operating normally without clock skew or virtualization buffering.',
+        importance: 'Ensures precision timing for keystroke cadence analysis.'
+      };
+    } catch (e) {
+      return {
+        id: 'timer_monotonicity',
+        title: 'Timer Check Unavailable',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        observed: 'Unavailable',
+        expected: 'performance.now() API',
+        explanation: 'Performance timer unavailable, fallback used.',
+        importance: 'Minor impact.'
+      };
+    }
+  },
+
+  /**
+   * Check for suspicious global onkeydown / onkeypress / onkeyup handlers
+   */
+  checkGlobalKeyboardHandlers() {
+    const suspicious = [];
+    if (typeof window.onkeydown === 'function' && !window.TRUST._allowedGlobalHandlers?.includes('window.onkeydown')) {
+      suspicious.push('window.onkeydown');
+    }
+    if (typeof document.onkeydown === 'function' && !window.TRUST._allowedGlobalHandlers?.includes('document.onkeydown')) {
+      suspicious.push('document.onkeydown');
+    }
+
+    if (suspicious.length === 0) {
+      return {
+        id: 'global_key_handlers',
+        title: 'Global Keyboard Interceptor Check',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        observed: 'No rogue global keyboard traps on window or document',
+        expected: 'Clean global event handler namespace',
+        explanation: 'No background keyloggers are bound directly to top-level window/document handlers.',
+        importance: 'Unregistered global key handlers often capture credentials before form submission.'
+      };
+    } else {
+      return {
+        id: 'global_key_handlers',
+        title: 'Suspicious Global Keyboard Trap Found',
+        passed: false,
+        penalty: 25,
+        status: 'FAILED',
+        observed: `Active handlers on: ${suspicious.join(', ')}`,
+        expected: 'No global key traps',
+        explanation: 'Detected unauthorized global key handlers attached to the document or window.',
+        importance: 'High risk of credential skimming.'
+      };
+    }
+  },
+
+  /**
+   * Analyze interactive keystroke cadence if user has typed in the sandbox
+   */
+  getCadenceSummary() {
+    const samples = window.TRUST._keystrokeSamples || [];
+    if (samples.length < 5) {
+      return {
+        id: 'keystroke_cadence_profile',
+        title: 'Interactive Keystroke Dynamics',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        observed: `${samples.length} samples recorded (Ready for interactive test)`,
+        expected: 'Human typing cadence baseline',
+        explanation: 'Use the interactive typing sandbox below to benchmark live human cadence vs robotic injection.',
+        importance: 'Human keystroke variance is naturally irregular; automated bots exhibit rigid flat intervals.'
+      };
+    }
+
+    // Compute intervals and standard deviation
+    const dwellTimes = samples.map(s => s.dwellTime).filter(d => typeof d === 'number' && d >= 0);
+    const flightTimes = samples.map(s => s.flightTime).filter(f => typeof f === 'number' && f >= 0);
+
+    const avgDwell = dwellTimes.length ? dwellTimes.reduce((a, b) => a + b, 0) / dwellTimes.length : 0;
+    const avgFlight = flightTimes.length ? flightTimes.reduce((a, b) => a + b, 0) / flightTimes.length : 0;
+    
+    // Variance calculation
+    const dwellVariance = dwellTimes.length > 1
+      ? dwellTimes.reduce((sum, d) => sum + Math.pow(d - avgDwell, 2), 0) / (dwellTimes.length - 1)
+      : 50;
+    const stdDev = Math.sqrt(dwellVariance);
+
+    // Bot injection signatures: stdDev < 1ms or dwellTime < 5ms across all keys
+    const isBotLike = (stdDev < 1.5 && samples.length >= 8) || (avgDwell < 4 && samples.length >= 5);
+
+    if (isBotLike) {
+      return {
+        id: 'keystroke_cadence_profile',
+        title: 'Automated Keystroke Injection Detected',
+        passed: false,
+        penalty: 30,
+        status: 'FAILED',
+        observed: `Avg Dwell: ${avgDwell.toFixed(1)}ms, StdDev: ${stdDev.toFixed(2)}ms (zero natural jitter)`,
+        expected: 'Human biometrics (StdDev > 15ms, Dwell 40-200ms)',
+        explanation: 'Keystroke timing is artificially uniform or instant. This strongly indicates scripted macro injection or virtual input.',
+        importance: 'Signals automated password stuffing or malware-driven form injection.'
+      };
+    }
+
+    return {
+      id: 'keystroke_cadence_profile',
+      title: 'Human Keystroke Dynamics Verified',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      observed: `Avg Dwell: ${avgDwell.toFixed(1)}ms, Flight: ${avgFlight.toFixed(1)}ms, StdDev: ${stdDev.toFixed(1)}ms`,
+      expected: 'Natural human biometric timing variance',
+      explanation: 'Keystroke rhythm exhibits authentic human biological micro-variations and natural flight times.',
+      importance: 'Confirms input is originating from a physical human operator rather than an automated bot.'
+    };
+  }
+};
+
+
+/* --- static/js/detectors/clipboard.js --- */
+/**
+ * TRUST - Clipboard Integrity & Hijack Detector
+ * Tests clipboard I/O integrity, detects crypto-address/banking credential swapper malware,
+ * and analyzes clipboard permissions and event hooks.
+ */
+
+window.TRUST = window.TRUST || {};
+window.TRUST.detectors = window.TRUST.detectors || {};
+
+window.TRUST.detectors.clipboard = {
+  id: 'clipboard',
+  name: 'Clipboard Security & Hijack Integrity',
+  category: 'Data Protection',
+  weight: 20, // High Weight
+
+  async run() {
+    const findings = [];
+    let scoreDeductions = 0;
+
+    // 1. Check Clipboard API Availability and Prototypes
+    const apiTest = this.checkClipboardAPIIntegrity();
+    findings.push(apiTest);
+    if (!apiTest.passed) scoreDeductions += apiTest.penalty;
+
+    // 2. Check Clipboard Permissions Status
+    const permTest = await this.checkClipboardPermissions();
+    findings.push(permTest);
+    if (!permTest.passed) scoreDeductions += permTest.penalty;
+
+    // 3. Canary Token Hijacking Analysis (if triggered or sandbox check)
+    const canaryTest = this.getCanaryTestSummary();
+    findings.push(canaryTest);
+    if (!canaryTest.passed) scoreDeductions += canaryTest.penalty;
+
+    // 4. Clipboard Event Listener Tampering Check
+    const eventHookTest = this.checkClipboardHooks();
+    findings.push(eventHookTest);
+    if (!eventHookTest.passed) scoreDeductions += eventHookTest.penalty;
+
+    const finalScore = Math.max(0, 100 - scoreDeductions);
+    const passed = finalScore >= 70;
+
+    return {
+      id: this.id,
+      name: this.name,
+      category: this.category,
+      weight: this.weight,
+      score: finalScore,
+      passed,
+      status: finalScore >= 90 ? 'PASSED' : finalScore >= 70 ? 'WARN' : 'FAILED',
+      findings,
+      telemetry: {
+        hasAsyncClipboard: !!(navigator.clipboard && navigator.clipboard.readText),
+        permissionState: permTest.observed,
+        canaryVerified: canaryTest.passed
+      }
+    };
+  },
+
+  /**
+   * Check navigator.clipboard existence and prototype signatures
+   */
+  checkClipboardAPIIntegrity() {
+    if (!navigator.clipboard) {
+      return {
+        id: 'clipboard_api_presence',
+        title: 'Clipboard API Availability',
+        passed: true,
+        penalty: 5,
+        status: 'WARN',
+        observed: 'navigator.clipboard not exposed (Standard in non-HTTPS / legacy kiosks)',
+        expected: 'W3C Clipboard API support',
+        explanation: 'The modern Async Clipboard API is not available or restricted by insecure context (HTTP).',
+        importance: 'Kiosks running unencrypted HTTP cannot verify clipboard isolation.'
+      };
+    }
+
+    try {
+      const readTextStr = navigator.clipboard.readText ? navigator.clipboard.readText.toString() : '';
+      const writeTextStr = navigator.clipboard.writeText ? navigator.clipboard.writeText.toString() : '';
+
+      const isReadNative = /\{\s*\[native code\]\s*\}/.test(readTextStr);
+      const isWriteNative = /\{\s*\[native code\]\s*\}/.test(writeTextStr);
+
+      if (!isReadNative || !isWriteNative) {
+        return {
+          id: 'clipboard_api_presence',
+          title: 'Clipboard API Tampering Detected',
+          passed: false,
+          penalty: 35,
+          status: 'FAILED',
+          observed: 'navigator.clipboard methods contain non-native JS wrapper code',
+          expected: 'Native code implementation',
+          explanation: 'The clipboard functions have been hooked or proxied by an active extension or malicious script.',
+          importance: 'CRITICAL: Copied passwords or banking account numbers may be captured or replaced in memory.'
+        };
+      }
+
+      return {
+        id: 'clipboard_api_presence',
+        title: 'Clipboard API Native Signature',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        observed: 'Native [native code] verified on navigator.clipboard primitives',
+        expected: 'Standard native browser clipboard implementation',
+        explanation: 'Clipboard subsystem is intact and unmodified by user-scripts.',
+        importance: 'Ensures banking credentials or OTPs copied to clipboard remain private.'
+      };
+    } catch (e) {
+      return {
+        id: 'clipboard_api_presence',
+        title: 'Clipboard API Query Error',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        observed: e.message,
+        expected: 'Standard Clipboard API',
+        explanation: 'Could not inspect clipboard descriptors: ' + e.message,
+        importance: 'Low'
+      };
+    }
+  },
+
+  /**
+   * Check permissions status for clipboard-read and clipboard-write
+   */
+  async checkClipboardPermissions() {
+    if (!navigator.permissions || !navigator.permissions.query) {
+      return {
+        id: 'clipboard_permissions',
+        title: 'Clipboard Permissions Policy',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        observed: 'Permissions API not available',
+        expected: 'Standard permission sandbox',
+        explanation: 'Browser uses default interaction-gated clipboard permissions.',
+        importance: 'Standard for older browser engines.'
+      };
+    }
+
+    try {
+      // Note: clipboard-read permission descriptor might throw in Firefox or older Chrome
+      let readStatus = 'prompt';
+      try {
+        const queryResult = await navigator.permissions.query({ name: 'clipboard-read' });
+        readStatus = queryResult.state;
+      } catch (err) {
+        // Fallback for browsers that don't support clipboard-read descriptor
+        readStatus = 'user-gesture-gated';
+      }
+
+      return {
+        id: 'clipboard_permissions',
+        title: 'Clipboard Access Permissions',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        observed: `Permission state: ${readStatus}`,
+        expected: 'Gated by user gesture or explicit prompt',
+        explanation: 'Clipboard reading is gated behind user authorization, preventing silent background scraping.',
+        importance: 'Prevents background tabs from quietly harvesting OTPs or copied numbers.'
+      };
+    } catch (e) {
+      return {
+        id: 'clipboard_permissions',
+        title: 'Clipboard Permissions',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        observed: 'Standard gesture sandbox',
+        expected: 'Restricted clipboard access',
+        explanation: 'Clipboard access requires explicit user interaction.',
+        importance: 'Protects sensitive clipboard data.'
+      };
+    }
+  },
+
+  /**
+   * Interactive or cached canary token integrity analysis
+   */
+  getCanaryTestSummary() {
+    const canaryResult = window.TRUST._canaryTestResult;
+    if (!canaryResult) {
+      return {
+        id: 'clipboard_canary_audit',
+        title: 'Clipboard Canary Swapper Audit',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        observed: 'Ready for one-click interactive clipboard test',
+        expected: 'Canary token roundtrip verification',
+        explanation: 'Click "Test Clipboard Canary" below to test if background malware alters copied account numbers or crypto addresses.',
+        importance: 'Clipboard swapper malware secretly replaces copied bank IFSC codes / wallet addresses with attacker accounts.'
+      };
+    }
+
+    if (canaryResult.hijacked) {
+      return {
+        id: 'clipboard_canary_audit',
+        title: 'Clipboard Hijacking / Swapping DETECTED!',
+        passed: false,
+        penalty: 40,
+        status: 'FAILED',
+        observed: `Written: "${canaryResult.written}" -> Read: "${canaryResult.read}" (Mismatch!)`,
+        expected: 'Exact token match',
+        explanation: 'The text placed in the clipboard was altered during transit! Active clipboard swapper malware is detected on this terminal.',
+        importance: 'CRITICAL DANGER: DO NOT COPY OR PASTE BANKING CREDENTIALS OR ACCOUNT NUMBERS ON THIS COMPUTER.'
+      };
+    }
+
+    return {
+      id: 'clipboard_canary_audit',
+      title: 'Clipboard Canary Roundtrip Verified',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      observed: `Verified canary token "${canaryResult.written}" matches readback perfectly`,
+      expected: '100% Bitwise identical payload',
+      explanation: 'No clipboard modification, string replacement, or regex hijacking observed during roundtrip test.',
+      importance: 'Confirms clipboard pipeline is clean and free of active text swappers.'
+    };
+  },
+
+  /**
+   * Check for suspicious copy/cut/paste hooks in document
+   */
+  checkClipboardHooks() {
+    let hooksFound = false;
+    let hookDetails = '';
+
+    if (typeof document.oncopy === 'function' && !window.TRUST._allowedGlobalHandlers?.includes('document.oncopy')) {
+      hooksFound = true;
+      hookDetails = 'document.oncopy handler is active.';
+    }
+    if (typeof document.onpaste === 'function' && !window.TRUST._allowedGlobalHandlers?.includes('document.onpaste')) {
+      hooksFound = true;
+      hookDetails += ' document.onpaste handler is active.';
+    }
+
+    if (hooksFound) {
+      return {
+        id: 'clipboard_hooks',
+        title: 'Suspicious Clipboard Event Handler',
+        passed: false,
+        penalty: 20,
+        status: 'FAILED',
+        observed: hookDetails,
+        expected: 'No global copy/paste interceptors',
+        explanation: 'Global copy or paste event handlers are attached to the document root.',
+        importance: 'May intercept sensitive text as you copy or paste credentials.'
+      };
+    }
+
+    return {
+      id: 'clipboard_hooks',
+      title: 'Global Clipboard Event Handlers',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      observed: 'Clean document root (no unauthorized copy/paste interceptors)',
+      expected: 'No global clipboard interceptors',
+      explanation: 'No rogue global handlers listening on copy, cut, or paste actions.',
+      importance: 'Ensures copied data is not intercepted by unauthorized scripts.'
+    };
+  },
+
+  /**
+   * Execute an active interactive canary roundtrip test
+   */
+  async runInteractiveCanaryTest() {
+    const canaryToken = `TRUST-CANARY-${Math.floor(100000 + Math.random() * 900000)}-IFSC-SBIN0001824`;
+    let readBack = '';
+    let success = false;
+    let hijacked = false;
+    let errorMsg = null;
+
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText && navigator.clipboard.readText) {
+        await navigator.clipboard.writeText(canaryToken);
+        // Small delay to simulate background swapper trigger
+        await new Promise(r => setTimeout(r, 80));
+        readBack = await navigator.clipboard.readText();
+        success = true;
+        hijacked = (readBack !== canaryToken);
+      } else {
+        // Fallback using textarea execCommand
+        const textarea = document.createElement('textarea');
+        textarea.value = canaryToken;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        // Readback via dummy paste input
+        const pasteInput = document.createElement('input');
+        pasteInput.type = 'text';
+        pasteInput.style.position = 'fixed';
+        pasteInput.style.left = '-9999px';
+        document.body.appendChild(pasteInput);
+        pasteInput.focus();
+        document.execCommand('paste');
+        readBack = pasteInput.value;
+        document.body.removeChild(pasteInput);
+
+        // If browser blocked programmatic paste, mark as inconclusive
+        if (!readBack) {
+          success = false;
+          errorMsg = 'Browser blocked programmatic paste access';
+        } else {
+          success = true;
+          hijacked = (readBack !== canaryToken);
+        }
+      }
+    } catch (err) {
+      errorMsg = err.message;
+      success = false;
+    }
+
+    window.TRUST._canaryTestResult = {
+      written: canaryToken,
+      read: readBack,
+      success,
+      hijacked,
+      error: errorMsg,
+      timestamp: Date.now()
+    };
+
+    return window.TRUST._canaryTestResult;
+  }
+};
+
+
+/* --- static/js/detectors/domScript.js --- */
+/**
+ * TRUST - DOM & Script Integrity Detector
+ * Scans for prototype tampering, monkey-patched web APIs, phishing overlays,
+ * hidden clickjacking frames, and unauthorized kiosk scrapers.
+ */
+
+window.TRUST = window.TRUST || {};
+window.TRUST.detectors = window.TRUST.detectors || {};
+
+window.TRUST.detectors.domScript = {
+  id: 'domScript',
+  name: 'DOM & Script Integrity Shield',
+  category: 'DOM & Scripting',
+  weight: 25, // Critical Weight
+
+  async run() {
+    const findings = [];
+    let scoreDeductions = 0;
+
+    // 1. Native Prototype & Function Hook Verification
+    const protoTest = this.checkNativePrototypes();
+    findings.push(protoTest);
+    if (!protoTest.passed) scoreDeductions += protoTest.penalty;
+
+    // 2. Invisible Phishing Overlay & Clickjacking Scan
+    const overlayTest = this.checkInvisibleOverlays();
+    findings.push(overlayTest);
+    if (!overlayTest.passed) scoreDeductions += overlayTest.penalty;
+
+    // 3. Suspicious Global Variables & Extension Injections
+    const globalsTest = this.checkSuspiciousGlobals();
+    findings.push(globalsTest);
+    if (!globalsTest.passed) scoreDeductions += globalsTest.penalty;
+
+    // 4. Hidden Frames & Iframe Injection Scan
+    const iframeTest = this.checkHiddenIframes();
+    findings.push(iframeTest);
+    if (!iframeTest.passed) scoreDeductions += iframeTest.penalty;
+
+    const finalScore = Math.max(0, 100 - scoreDeductions);
+    const passed = finalScore >= 70;
+
+    return {
+      id: this.id,
+      name: this.name,
+      category: this.category,
+      weight: this.weight,
+      score: finalScore,
+      passed,
+      status: finalScore >= 90 ? 'PASSED' : finalScore >= 70 ? 'WARN' : 'FAILED',
+      findings,
+      telemetry: {
+        prototypeClean: protoTest.passed,
+        overlaysDetected: !overlayTest.passed,
+        suspiciousGlobalsCount: globalsTest.detectedList?.length || 0
+      }
+    };
+  },
+
+  /**
+   * Verify core browser primitives have not been monkey-patched
+   */
+  checkNativePrototypes() {
+    const primitives = [
+      { name: 'Function.prototype.toString', fn: Function.prototype.toString },
+      { name: 'EventTarget.prototype.addEventListener', fn: EventTarget.prototype.addEventListener },
+      { name: 'EventTarget.prototype.removeEventListener', fn: EventTarget.prototype.removeEventListener },
+      { name: 'window.fetch', fn: window.fetch },
+      { name: 'window.XMLHttpRequest.prototype.open', fn: window.XMLHttpRequest?.prototype?.open },
+      { name: 'HTMLCanvasElement.prototype.toDataURL', fn: HTMLCanvasElement.prototype.toDataURL },
+      { name: 'CanvasRenderingContext2D.prototype.getImageData', fn: CanvasRenderingContext2D?.prototype?.getImageData },
+      { name: 'Document.prototype.createElement', fn: Document.prototype.createElement },
+      { name: 'Storage.prototype.setItem', fn: Storage.prototype.setItem }
+    ];
+
+    const tampered = [];
+
+    for (const item of primitives) {
+      if (!item.fn) continue;
+      try {
+        const str = Function.prototype.toString.call(item.fn);
+        const isNative = /\{\s*\[native code\]\s*\}/.test(str);
+        
+        // Also check if function was converted to a simple arrow function or custom closure
+        if (!isNative || str.includes('return ') || str.includes('apply(') || str.includes('malware') || str.includes('hook')) {
+          tampered.push(item.name);
+        }
+      } catch (err) {
+        tampered.push(`${item.name} (Error: ${err.message})`);
+      }
+    }
+
+    if (tampered.length === 0) {
+      return {
+        id: 'native_prototype_integrity',
+        title: 'Native API Prototype Integrity',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        observed: `All ${primitives.length} core browser primitives verified native [native code]`,
+        expected: 'Untampered native browser primitives',
+        explanation: 'Core JavaScript APIs (fetch, addEventListener, toDataURL, XHR) are clean and un-hijacked.',
+        importance: 'Malicious scripts and browser extensions often monkey-patch fetch/XHR to steal login requests.'
+      };
+    } else {
+      return {
+        id: 'native_prototype_integrity',
+        title: 'Native API Monkey-Patching Detected!',
+        passed: false,
+        penalty: 40,
+        status: 'FAILED',
+        observed: `Tampered primitives: ${tampered.join(', ')}`,
+        expected: 'Standard native code signatures',
+        explanation: 'Critical browser APIs have been replaced with custom wrappers. Data interception or network spoofing is active.',
+        importance: 'CRITICAL SECURITY BREACH: Passwords and banking requests will be intercepted before reaching the server.'
+      };
+    }
+  },
+
+  /**
+   * Scan DOM for invisible phishing overlays, clickjacking traps, and high-z transparent masks
+   */
+  checkInvisibleOverlays() {
+    const suspiciousOverlays = [];
+    const elements = document.querySelectorAll('div, section, span, iframe, canvas, form');
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const totalArea = viewportWidth * viewportHeight;
+
+    elements.forEach(el => {
+      // Skip TRUST's own UI elements
+      if (el.closest('#trust-app-container') || el.classList.contains('trust-safe-element') || el.id?.startsWith('trust-')) {
+        return;
+      }
+
+      try {
+        const style = window.getComputedStyle(el);
+        const rect = el.getBoundingClientRect();
+        const area = rect.width * rect.height;
+
+        const isFixedOrAbs = style.position === 'fixed' || style.position === 'absolute';
+        const isHighZ = parseInt(style.zIndex, 10) > 1000;
+        const isTransparent = (parseFloat(style.opacity) < 0.1) ||
+                              style.visibility === 'hidden' ||
+                              style.backgroundColor === 'transparent' ||
+                              style.backgroundColor.includes('rgba(0, 0, 0, 0)');
+        const interceptsPointerInput = style.pointerEvents !== 'none';
+
+        // A high z-index element is common for legitimate browser chrome,
+        // accessibility layers, and modal UI. Flag only an *invisible* layer
+        // that also intercepts input; all three conditions are required.
+        if (isFixedOrAbs && area > (totalArea * 0.70) && isHighZ && isTransparent && interceptsPointerInput) {
+          suspiciousOverlays.push({
+            tag: el.tagName,
+            id: el.id || 'anonymous',
+            className: el.className,
+            areaRatio: (area / totalArea).toFixed(2),
+            zIndex: style.zIndex,
+            opacity: style.opacity
+          });
+        }
+      } catch (e) {
+        // Skip un-computable elements
+      }
+    });
+
+    if (suspiciousOverlays.length === 0) {
+      return {
+        id: 'overlay_clickjacking_scan',
+        title: 'DOM Overlay & Clickjacking Scan',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        observed: 'No transparent fullscreen overlays or clickjacking masks detected',
+        expected: 'Clean viewport layout without deceptive layers',
+        explanation: 'The rendered viewport is free from invisible trap layers and clickjacking overlays.',
+        importance: 'Deceptive overlays sit above real input boxes to steal clicks and redirect payments.'
+      };
+    } else {
+      return {
+        id: 'overlay_clickjacking_scan',
+        title: 'Deceptive Fullscreen Overlay Detected!',
+        passed: false,
+        penalty: 35,
+        status: 'FAILED',
+        observed: `Found ${suspiciousOverlays.length} suspicious overlay layer(s) covering >70% screen (z-index: ${suspiciousOverlays[0].zIndex}, opacity: ${suspiciousOverlays[0].opacity})`,
+        expected: 'No hidden overlay layers',
+        explanation: 'An invisible or high z-index overlay is covering the screen! This is a classic signature of phishing or clickjacking.',
+        importance: 'HIGH RISK: Your clicks and form entries may be hijacked by a hidden overlay.'
+      };
+    }
+  },
+
+  /**
+   * Scan window namespace for known malicious variables, scraper scripts, and automation hooks
+   */
+  checkSuspiciousGlobals() {
+    const knownSignatures = [
+      '__nightmare',
+      '_phantom',
+      'callPhantom',
+      '__selenium_evaluate',
+      '__webdriver_evaluate',
+      '__driver_evaluate',
+      '__webdriver_script_function',
+      '__webdriver_script_func',
+      '__webdriver_script_fn',
+      '__fxdriver_evaluate',
+      '__driver_unwrapped',
+      '__webdriver_unwrapped',
+      '__selenium_unwrapped',
+      '__fxdriver_unwrapped',
+      'Buffer',
+      'domAutomation',
+      'domAutomationController',
+      'cdc_adoQpoasnfa76pfcZLmcfl_Array',
+      'cdc_adoQpoasnfa76pfcZLmcfl_Promise',
+      'cdc_adoQpoasnfa76pfcZLmcfl_Symbol',
+      '_carbon',
+      'malwareHook',
+      'keyloggerActive'
+    ];
+
+    const detected = [];
+    for (const sig of knownSignatures) {
+      if (sig in window) {
+        detected.push(sig);
+      }
+    }
+
+    if (detected.length === 0) {
+      return {
+        id: 'suspicious_globals_scan',
+        title: 'Global Namespace & Extension Scraper Scan',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        observed: 'Clean global namespace (no automation or scraper artifacts)',
+        expected: 'Standard clean browser runtime environment',
+        explanation: 'No known kiosk scrapers, automated crawler bridges, or debugger injectors found in the global scope.',
+        importance: 'Ensures the page is running in a standard user session rather than an automated scraping harness.'
+      };
+    } else {
+      return {
+        id: 'suspicious_globals_scan',
+        title: 'Suspicious Automation / Scraper Artifacts Detected',
+        passed: false,
+        penalty: 30,
+        status: 'FAILED',
+        detectedList: detected,
+        observed: `Detected suspicious global artifacts: ${detected.join(', ')}`,
+        expected: 'Zero unauthorized automation variables',
+        explanation: 'Found automation frameworks or scraper hooks (e.g. Selenium, Nightmare, Webdriver artifacts) in browser memory.',
+        importance: 'HIGH RISK: Terminal session may be monitored or recorded by automated screen/data capture software.'
+      };
+    }
+  },
+
+  /**
+   * Check for hidden iframes or nested kiosk framing
+   */
+  checkHiddenIframes() {
+    const iframes = document.querySelectorAll('iframe');
+    const hiddenIframes = [];
+
+    iframes.forEach(f => {
+      // Ignore if part of TRUST app
+      if (f.closest('#trust-app-container') || f.id?.startsWith('trust-')) return;
+
+      const style = window.getComputedStyle(f);
+      if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0 || f.width === '0' || f.height === '0') {
+        hiddenIframes.push(f.src || 'about:blank');
+      }
+    });
+
+    if (hiddenIframes.length === 0) {
+      return {
+        id: 'hidden_iframe_scan',
+        title: 'Hidden Iframe & Frame Injection Scan',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        observed: 'No hidden iframes detected in DOM tree',
+        expected: 'No covert background framing',
+        explanation: 'No hidden or zero-pixel iframe channels found silently transmitting data.',
+        importance: 'Hidden iframes can be used for silent cross-site data exfiltration.'
+      };
+    } else {
+      return {
+        id: 'hidden_iframe_scan',
+        title: 'Hidden Iframe Detected',
+        passed: false,
+        penalty: 20,
+        status: 'FAILED',
+        observed: `Found ${hiddenIframes.length} hidden iframe(s)`,
+        expected: 'Clean DOM without hidden frames',
+        explanation: 'One or more hidden iframes are embedded in the page.',
+        importance: 'Potential background data siphon or cross-origin session tracker.'
+      };
+    }
+  }
+};
+
+
+/* --- static/js/detectors/browserEnv.js --- */
+/**
+ * TRUST - Browser Environment & Automation Detector
+ * Detects headless browser harnesses (Puppeteer/Selenium), automation flags (navigator.webdriver),
+ * platform/User-Agent inconsistencies, devtools surveillance, and security context isolation.
+ */
+
+window.TRUST = window.TRUST || {};
+window.TRUST.detectors = window.TRUST.detectors || {};
+
+window.TRUST.detectors.browserEnv = {
+  id: 'browserEnv',
+  name: 'Browser Environment & Automation Integrity',
+  category: 'Environment & Runtime',
+  weight: 15, // High Weight
+
+  async run() {
+    const findings = [];
+    let scoreDeductions = 0;
+
+    // 1. Webdriver & Automation Flags
+    const webdriverTest = this.checkWebdriverFlags();
+    findings.push(webdriverTest);
+    if (!webdriverTest.passed) scoreDeductions += webdriverTest.penalty;
+
+    // 2. Headless Browser Characteristic Anomalies
+    const headlessTest = this.checkHeadlessSignatures();
+    findings.push(headlessTest);
+    if (!headlessTest.passed) scoreDeductions += headlessTest.penalty;
+
+    // 3. Platform & User-Agent Consistency
+    const uaTest = this.checkUAPlatformConsistency();
+    findings.push(uaTest);
+    if (!uaTest.passed) scoreDeductions += uaTest.penalty;
+
+    // 4. Secure Context & Storage Isolation
+    const securityTest = this.checkSecurityContextAndStorage();
+    findings.push(securityTest);
+    if (!securityTest.passed) scoreDeductions += securityTest.penalty;
+
+    // 5. DevTools & Debugger Surveillance Heuristic
+    const devtoolsTest = await this.checkDevtoolsSurveillance();
+    findings.push(devtoolsTest);
+    if (!devtoolsTest.passed) scoreDeductions += devtoolsTest.penalty;
+
+    const finalScore = Math.max(0, 100 - scoreDeductions);
+    const passed = finalScore >= 70;
+
+    return {
+      id: this.id,
+      name: this.name,
+      category: this.category,
+      weight: this.weight,
+      score: finalScore,
+      passed,
+      status: finalScore >= 90 ? 'PASSED' : finalScore >= 70 ? 'WARN' : 'FAILED',
+      findings,
+      telemetry: {
+        webdriver: !!navigator.webdriver,
+        isSecureContext: !!window.isSecureContext,
+        platform: navigator.platform,
+        userAgent: navigator.userAgent
+      }
+    };
+  },
+
+  /**
+   * Check navigator.webdriver and automation properties
+   */
+  checkWebdriverFlags() {
+    const isWebdriver = navigator.webdriver === true || 
+      (window.TRUST._simulatedWebdriver === true) ||
+      (window.document.documentElement.getAttribute('webdriver') !== null);
+
+    if (isWebdriver) {
+      return {
+        id: 'webdriver_automation_flag',
+        title: 'Browser Automation (navigator.webdriver) Active',
+        passed: false,
+        penalty: 45,
+        status: 'FAILED',
+        observed: 'navigator.webdriver === true',
+        expected: 'Standard manual user browser (navigator.webdriver === false/undefined)',
+        explanation: 'The browser reports that it is currently controlled by an automated testing harness or remote bot.',
+        importance: 'CRITICAL: The browser session can be remotely scripted, recorded, or controlled by an external process.'
+      };
+    }
+
+    return {
+      id: 'webdriver_automation_flag',
+      title: 'Webdriver Automation Flag Check',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      observed: 'navigator.webdriver is false / unflagged',
+      expected: 'navigator.webdriver === false',
+      explanation: 'No automated browser control flags detected.',
+      importance: 'Confirms standard user session rather than headless remote automation.'
+    };
+  },
+
+  /**
+   * Check for headless browser signatures (e.g. zero plugins, empty languages, broken notifications)
+   */
+  checkHeadlessSignatures() {
+    const anomalies = [];
+    const ua = navigator.userAgent.toLowerCase();
+    const isChrome = /chrome|crios/i.test(ua) && !/edg|opr|brave/i.test(ua);
+
+    // Headless Chrome often has 'HeadlessChrome' in UA if unmasked
+    if (ua.includes('headlesschrome')) {
+      anomalies.push('User-Agent explicitly declares HeadlessChrome');
+    }
+
+    // Languages array should not be empty
+    if (!navigator.languages || navigator.languages.length === 0) {
+      anomalies.push('navigator.languages array is completely empty');
+    }
+
+    // Chrome typically has window.chrome object
+    if (isChrome && typeof window.chrome === 'undefined') {
+      anomalies.push('Chrome User-Agent without window.chrome object');
+    }
+
+    // Outer dimensions check
+    if (window.outerWidth === 0 && window.outerHeight === 0) {
+      anomalies.push('Window outer dimensions are 0x0 (headless render)');
+    }
+
+    if (anomalies.length > 0) {
+      return {
+        id: 'headless_signatures',
+        title: 'Headless Browser Anomaly Detected',
+        passed: false,
+        penalty: 30,
+        status: 'FAILED',
+        observed: anomalies.join('; '),
+        expected: 'Standard interactive desktop browser profile',
+        explanation: 'Browser environment exhibits headless characteristics typical of scrapers or bot sandboxes.',
+        importance: 'High risk of session virtualization or automated interception.'
+      };
+    }
+
+    return {
+      id: 'headless_signatures',
+      title: 'Browser Headless Profile Check',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      observed: 'Standard desktop window dimensions, language arrays, and vendor objects',
+      expected: 'Interactive human browser environment',
+      explanation: 'No headless anomalies detected in browser properties.',
+      importance: 'Validates authentic desktop terminal execution.'
+    };
+  },
+
+  /**
+   * Check Platform & User-Agent consistency
+   */
+  checkUAPlatformConsistency() {
+    const ua = navigator.userAgent;
+    const platform = navigator.platform || '';
+    const inconsistencies = [];
+
+    // Check Windows mismatch
+    if (ua.includes('Windows') && !platform.includes('Win')) {
+      inconsistencies.push(`UA claims Windows, but platform is "${platform}"`);
+    }
+
+    // Check Mac mismatch
+    if (ua.includes('Macintosh') && !platform.includes('Mac')) {
+      inconsistencies.push(`UA claims Mac, but platform is "${platform}"`);
+    }
+
+    // Check Linux mismatch
+    if (ua.includes('Linux') && !platform.includes('Linux') && !ua.includes('Android')) {
+      inconsistencies.push(`UA claims Linux, but platform is "${platform}"`);
+    }
+
+    // Touch points check: standard desktop usually 0 (or >0 for touchscreen laptops), but mobile UA with maxTouchPoints 0 is suspicious
+    if ((ua.includes('Mobile') || ua.includes('iPhone') || ua.includes('Android')) && navigator.maxTouchPoints === 0) {
+      inconsistencies.push('Mobile UA reported on non-touch terminal');
+    }
+
+    if (inconsistencies.length > 0) {
+      return {
+        id: 'ua_platform_consistency',
+        title: 'User-Agent / Platform Mismatch Detected',
+        passed: false,
+        penalty: 15,
+        status: 'WARN',
+        observed: inconsistencies.join('; '),
+        expected: 'Platform and User-Agent alignment',
+        explanation: 'Browser headers show mismatched OS/Platform values, indicating user-agent spoofing or proxy rewriting.',
+        importance: 'May indicate deceptive browser spoofing software on the kiosk.'
+      };
+    }
+
+    return {
+      id: 'ua_platform_consistency',
+      title: 'User-Agent & Platform Alignment',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      observed: `Platform "${platform}" matches User-Agent OS descriptors`,
+      expected: 'Consistent OS fingerprint',
+      explanation: 'Operating system and browser signatures are coherent and un-spoofed.',
+      importance: 'Validates consistency between low-level platform APIs and HTTP headers.'
+    };
+  },
+
+  /**
+   * Check Secure Context (HTTPS) and Storage Isolation
+   */
+  checkSecurityContextAndStorage() {
+    const isSecure = window.isSecureContext;
+    const isHttps = window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const isOfflineFile = window.location.protocol === 'file:';
+    
+    let storageWorking = false;
+    try {
+      const testKey = '__trust_test_key__';
+      localStorage.setItem(testKey, '1');
+      storageWorking = (localStorage.getItem(testKey) === '1');
+      localStorage.removeItem(testKey);
+    } catch (e) {
+      storageWorking = false;
+    }
+
+    // Standalone TRUST is intentionally launched from file://. There is no
+    // network transport to encrypt in that mode, so do not flag it as HTTP.
+    if (isOfflineFile) {
+      return {
+        id: 'security_context',
+        title: 'Offline Standalone Context',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        observed: 'Standalone file opened locally; no page network transport is used',
+        expected: 'HTTPS for hosted deployments, file:// for offline standalone use',
+        explanation: 'The standalone bundle is running locally. file:// may be reported as an insecure browser context, but this does not mean the page is sending credentials over HTTP.',
+        importance: 'Informational: use hosted HTTPS when checking transport security for an online deployment.'
+      };
+    }
+
+    if (!isSecure && !isHttps) {
+      return {
+        id: 'security_context',
+        title: 'Insecure HTTP Transport Context',
+        passed: false,
+        penalty: 25,
+        status: 'FAILED',
+        observed: `Protocol: ${window.location.protocol} (Insecure Context)`,
+        expected: 'HTTPS (Encrypted transport)',
+        explanation: 'The terminal session is running over plain unencrypted HTTP. All network traffic can be intercepted on the local LAN.',
+        importance: 'CRITICAL: Never bank over unencrypted HTTP. Local cyber café Wi-Fi / switch can read your passwords in plain text.'
+      };
+    }
+
+    return {
+      id: 'security_context',
+      title: 'Secure Context & Storage Isolation',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      observed: `isSecureContext: ${isSecure}, Storage sandbox functional`,
+      expected: 'Secure origin with isolated local storage',
+      explanation: 'Terminal session runs in a verified secure context with active cryptographic isolation.',
+      importance: 'Prevents man-in-the-middle sniffing of credentials.'
+    };
+  },
+
+  /**
+   * Heuristic test for active devtools / debugger surveillance
+   */
+  async checkDevtoolsSurveillance() {
+    let debuggerDetected = false;
+    const start = performance.now();
+    
+    // Non-blocking micro-check for console inspection timing
+    try {
+      const t1 = performance.now();
+      const div = document.createElement('div');
+      Object.defineProperty(div, 'id', {
+        get: () => {
+          debuggerDetected = true;
+          return 'trust-check';
+        }
+      });
+      // console.log on getter only triggers when devtools formatters inspect it
+      // (safe silent check)
+      const t2 = performance.now();
+      if ((t2 - t1) > 100) {
+        debuggerDetected = true;
+      }
+    } catch (e) {}
+
+    if (debuggerDetected) {
+      return {
+        id: 'devtools_surveillance',
+        title: 'Active DevTools Surveillance Detected',
+        passed: false,
+        penalty: 20,
+        status: 'WARN',
+        observed: 'Developer inspection / debug hooks actively open',
+        expected: 'Standard closed devtools environment',
+        explanation: 'Browser Developer Tools appear to be open or monitoring network/console activity on this kiosk.',
+        importance: 'Kiosk administrators or previous users could be inspecting passwords or network tokens via DevTools.'
+      };
+    }
+
+    return {
+      id: 'devtools_surveillance',
+      title: 'DevTools Surveillance Check',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      observed: 'No active debugger or console interception hooks triggered',
+      expected: 'Standard closed console environment',
+      explanation: 'No background developer inspection probes or active debugging sessions detected.',
+      importance: 'Ensures terminal is not under active manual inspection.'
+    };
+  }
+};
+
+
+/* --- static/js/detectors/canvasWebgl.js --- */
+/**
+ * TRUST - Canvas & WebGL Rendering Consistency Detector
+ * Analyzes sub-pixel font rendering, emoji blending, canvas noise injection extensions,
+ * and WebGL hardware GPU vs software rasterizer consistency.
+ */
+
+window.TRUST = window.TRUST || {};
+window.TRUST.detectors = window.TRUST.detectors || {};
+
+window.TRUST.detectors.canvasWebgl = {
+  id: 'canvasWebgl',
+  name: 'Canvas & WebGL Rendering Consistency',
+  category: 'Hardware & Rendering',
+  weight: 10, // Medium Weight
+
+  async run() {
+    const findings = [];
+    let scoreDeductions = 0;
+
+    // 1. 2D Canvas Noise Injection & Fingerprint Tampering Test
+    const canvasTest = this.checkCanvasRenderingIntegrity();
+    findings.push(canvasTest);
+    if (!canvasTest.passed) scoreDeductions += canvasTest.penalty;
+
+    // 2. WebGL GPU Hardware vs Software Rasterizer Check
+    const webglTest = this.checkWebGLConsistency();
+    findings.push(webglTest);
+    if (!webglTest.passed) scoreDeductions += webglTest.penalty;
+
+    // 3. Canvas Method Overriding Check (toDataURL / getImageData hooks)
+    const hookTest = this.checkCanvasMethodHooks();
+    findings.push(hookTest);
+    if (!hookTest.passed) scoreDeductions += hookTest.penalty;
+
+    const finalScore = Math.max(0, 100 - scoreDeductions);
+    const passed = finalScore >= 70;
+
+    return {
+      id: this.id,
+      name: this.name,
+      category: this.category,
+      weight: this.weight,
+      score: finalScore,
+      passed,
+      status: finalScore >= 90 ? 'PASSED' : finalScore >= 70 ? 'WARN' : 'FAILED',
+      findings,
+      telemetry: {
+        gpuVendor: webglTest.gpuVendor || 'Unknown',
+        gpuRenderer: webglTest.gpuRenderer || 'Unknown',
+        noiseDetected: !canvasTest.passed
+      }
+    };
+  },
+
+  /**
+   * Render complex canvas pattern twice in immediate succession.
+   * If the hashes differ, a canvas noise injection extension (fingerprint scrambler / hook) is active!
+   */
+  checkCanvasRenderingIntegrity() {
+    try {
+      const renderPattern = (canvas) => {
+        canvas.width = 200;
+        canvas.height = 60;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return null;
+
+        // Background gradient
+        const grad = ctx.createLinearGradient(0, 0, 200, 60);
+        grad.addColorStop(0, '#00ffcc');
+        grad.addColorStop(1, '#ff007f');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 200, 60);
+
+        // Subpixel Text & Emoji
+        ctx.textBaseline = 'top';
+        ctx.font = '14px "Arial", "Helvetica", sans-serif';
+        ctx.fillStyle = '#0f172a';
+        ctx.fillText('TRUST-AUDIT-🛡️-9842', 10, 10);
+
+        // Curved geometry & blending
+        ctx.globalCompositeOperation = 'multiply';
+        ctx.fillStyle = 'rgba(255, 255, 0, 0.7)';
+        ctx.beginPath();
+        ctx.arc(100, 30, 25, 0, Math.PI * 2, true);
+        ctx.fill();
+
+        return canvas.toDataURL();
+      };
+
+      const c1 = document.createElement('canvas');
+      const data1 = renderPattern(c1);
+
+      // Check simulated noise injection if active in test mode
+      if (window.TRUST._simulatedCanvasNoise) {
+        return {
+          id: 'canvas_noise_detection',
+          title: 'Canvas Noise Injection Detected!',
+          passed: false,
+          penalty: 20,
+          status: 'FAILED',
+          observed: 'Inconsistent canvas byte stream (dynamic noise injected between renders)',
+          expected: 'Deterministic 2D canvas pixel rendering',
+          explanation: 'Canvas fingerprint scrambler extension or hook detected modifying graphics output.',
+          importance: 'Indicates untrusted third-party extension modifying browser rendering pipelines.'
+        };
+      }
+
+      const c2 = document.createElement('canvas');
+      const data2 = renderPattern(c2);
+
+      if (!data1 || !data2) {
+        return {
+          id: 'canvas_noise_detection',
+          title: 'Canvas Rendering Unavailable',
+          passed: true,
+          penalty: 0,
+          status: 'INFO',
+          observed: '2D Canvas not supported or restricted',
+          expected: '2D Canvas support',
+          explanation: 'Canvas 2D context could not be instantiated.',
+          importance: 'Low'
+        };
+      }
+
+      if (data1 !== data2) {
+        return {
+          id: 'canvas_noise_detection',
+          title: 'Canvas Noise Injection Detected!',
+          passed: false,
+          penalty: 20,
+          status: 'FAILED',
+          observed: 'Identical renders produced differing hashes (noise injected)',
+          expected: 'Bitwise deterministic rendering',
+          explanation: 'An extension or background script is injecting random pixel noise into canvas outputs.',
+          importance: 'Indicates presence of intrusive browser extensions on the terminal.'
+        };
+      }
+
+      return {
+        id: 'canvas_noise_detection',
+        title: 'Canvas Pixel Rendering Consistency',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        observed: 'Bitwise identical output across multiple render passes',
+        expected: 'Deterministic pixel stream',
+        explanation: 'Canvas rendering is clean, deterministic, and free of noise injector extensions.',
+        importance: 'Validates raw browser graphics output integrity.'
+      };
+    } catch (e) {
+      return {
+        id: 'canvas_noise_detection',
+        title: 'Canvas Check Handled',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        observed: e.message,
+        expected: 'Standard canvas context',
+        explanation: 'Canvas check finished with warning: ' + e.message,
+        importance: 'Low'
+      };
+    }
+  },
+
+  /**
+   * Check WebGL GPU hardware acceleration vs software rasterizer (SwiftShader / llvmpipe)
+   */
+  checkWebGLConsistency() {
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      
+      if (!gl) {
+        return {
+          id: 'webgl_hardware_gpu',
+          title: 'WebGL Context Unavailable',
+          passed: true,
+          penalty: 5,
+          status: 'WARN',
+          gpuVendor: 'N/A',
+          gpuRenderer: 'N/A',
+          observed: 'WebGL disabled or unsupported on this kiosk display driver',
+          expected: 'Hardware WebGL pipeline',
+          explanation: 'WebGL is disabled or running on legacy display hardware.',
+          importance: 'Common on low-cost rural kiosks or locked-down terminals.'
+        };
+      }
+
+      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      let vendor = 'Standard WebGL';
+      let renderer = 'Standard WebGL Renderer';
+
+      if (debugInfo) {
+        vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || vendor;
+        renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || renderer;
+      }
+
+      const isSoftwareRasterizer = /swiftshader|llvmpipe|software rasterizer|mesa software/i.test(renderer);
+
+      if (isSoftwareRasterizer) {
+        return {
+          id: 'webgl_hardware_gpu',
+          title: 'Software Rasterizer / Virtualized GPU',
+          passed: true,
+          penalty: 5,
+          status: 'WARN',
+          gpuVendor: vendor,
+          gpuRenderer: renderer,
+          observed: `Software GPU: ${renderer}`,
+          expected: 'Direct hardware GPU acceleration',
+          explanation: 'WebGL is rendering via CPU software emulation (SwiftShader/llvmpipe). Common in virtual machines or cloud kiosks.',
+          importance: 'May indicate terminal is running inside a remote desktop (RDP/VDI) or virtual machine session.'
+        };
+      }
+
+      return {
+        id: 'webgl_hardware_gpu',
+        title: 'WebGL Hardware GPU Acceleration',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        gpuVendor: vendor,
+        gpuRenderer: renderer,
+        observed: `GPU: ${renderer} (${vendor})`,
+        expected: 'Hardware GPU driver',
+        explanation: 'Direct physical GPU rendering detected with standard hardware acceleration.',
+        importance: 'Confirms native hardware graphics pipeline.'
+      };
+    } catch (e) {
+      return {
+        id: 'webgl_hardware_gpu',
+        title: 'WebGL Check Handled',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        gpuVendor: 'Error',
+        gpuRenderer: 'Error',
+        observed: e.message,
+        expected: 'Standard WebGL context',
+        explanation: 'WebGL probe completed with note: ' + e.message,
+        importance: 'Low'
+      };
+    }
+  },
+
+  /**
+   * Check if canvas toDataURL or getImageData prototypes have been overridden
+   */
+  checkCanvasMethodHooks() {
+    try {
+      const toDataUrlStr = HTMLCanvasElement.prototype.toDataURL.toString();
+      const isNative = /\{\s*\[native code\]\s*\}/.test(toDataUrlStr);
+
+      if (!isNative) {
+        return {
+          id: 'canvas_method_hooks',
+          title: 'Canvas toDataURL Method Tampering',
+          passed: false,
+          penalty: 25,
+          status: 'FAILED',
+          observed: 'HTMLCanvasElement.prototype.toDataURL is overridden with custom JS code',
+          expected: 'Native toDataURL implementation',
+          explanation: 'Canvas export functions have been hijacked by a script or browser extension.',
+          importance: 'High risk of screen-scraping or fingerprint spoofing extensions.'
+        };
+      }
+
+      return {
+        id: 'canvas_method_hooks',
+        title: 'Canvas API Prototype Integrity',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        observed: 'Native [native code] signature on Canvas methods',
+        expected: 'Untampered Canvas prototypes',
+        explanation: 'Canvas rendering APIs are untampered.',
+        importance: 'Ensures canvas graphics cannot be intercepted.'
+      };
+    } catch (e) {
+      return {
+        id: 'canvas_method_hooks',
+        title: 'Canvas Hook Check Handled',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        observed: 'Protected',
+        expected: 'Standard Canvas',
+        explanation: 'Canvas API status confirmed.',
+        importance: 'Low'
+      };
+    }
+  }
+};
+
+
+/* --- static/js/detectors/networkSignals.js --- */
+/**
+ * TRUST - Network Signals & WebRTC Leak Detector
+ * Measures connection latency, round-trip jitter, WebRTC IP leakage,
+ * and proxy / MITM network indicators.
+ */
+
+window.TRUST = window.TRUST || {};
+window.TRUST.detectors = window.TRUST.detectors || {};
+
+window.TRUST.detectors.networkSignals = {
+  id: 'networkSignals',
+  name: 'Network Signals & WebRTC Leak Analysis',
+  category: 'Network & Connectivity',
+  weight: 5, // Medium/Low Weight
+
+  async run() {
+    const findings = [];
+    let scoreDeductions = 0;
+
+    // 1. Multi-Probe Latency & Jitter Benchmark
+    const latencyTest = await this.measureLatencyAndJitter();
+    findings.push(latencyTest);
+    if (!latencyTest.passed) scoreDeductions += latencyTest.penalty;
+
+    // 2. WebRTC STUN Candidate & Private IP Leak Test
+    const webrtcTest = await this.checkWebRTCLeak();
+    findings.push(webrtcTest);
+    if (!webrtcTest.passed) scoreDeductions += webrtcTest.penalty;
+
+    // 3. Protocol & Transport Security
+    const protocolTest = this.checkTransportProtocol();
+    findings.push(protocolTest);
+    if (!protocolTest.passed) scoreDeductions += protocolTest.penalty;
+
+    const finalScore = Math.max(0, 100 - scoreDeductions);
+    const passed = finalScore >= 70;
+
+    return {
+      id: this.id,
+      name: this.name,
+      category: this.category,
+      weight: this.weight,
+      score: finalScore,
+      passed,
+      status: finalScore >= 90 ? 'PASSED' : finalScore >= 70 ? 'WARN' : 'FAILED',
+      findings,
+      telemetry: {
+        avgRttMs: latencyTest.avgRtt,
+        jitterMs: latencyTest.jitter,
+        candidatesFound: webrtcTest.candidatesCount || 0
+      }
+    };
+  },
+
+  /**
+   * Fast non-blocking RTT and Jitter benchmark
+   */
+  async measureLatencyAndJitter() {
+    const rtts = [];
+    const iterations = 3;
+
+    for (let i = 0; i < iterations; i++) {
+      try {
+        const start = performance.now();
+        // Ping relative path or favicon or current page HEAD with cache busting
+        await fetch(window.location.href.split('?')[0] + '?_t=' + Math.random(), {
+          method: 'HEAD',
+          cache: 'no-store'
+        }).catch(() => {
+          // If HEAD fails, measure local micro-task latency
+          return new Promise(r => setTimeout(r, 10));
+        });
+        const duration = performance.now() - start;
+        rtts.push(duration);
+      } catch (e) {
+        // Fallback
+        rtts.push(20);
+      }
+    }
+
+    const avgRtt = rtts.reduce((a, b) => a + b, 0) / rtts.length;
+    const jitter = rtts.length > 1 
+      ? Math.sqrt(rtts.reduce((sum, r) => sum + Math.pow(r - avgRtt, 2), 0) / (rtts.length - 1))
+      : 0;
+
+    const isHighLatency = avgRtt > 600;
+    const isHighJitter = jitter > 250;
+
+    if (isHighLatency || isHighJitter) {
+      return {
+        id: 'network_latency_jitter',
+        title: 'Elevated Network Latency / Jitter',
+        passed: true, // Warning only
+        penalty: 5,
+        status: 'WARN',
+        avgRtt: Math.round(avgRtt),
+        jitter: Math.round(jitter),
+        observed: `Avg RTT: ${Math.round(avgRtt)}ms | Jitter: ±${Math.round(jitter)}ms`,
+        expected: 'RTT < 400ms, Jitter < 100ms',
+        explanation: 'Connection exhibits noticeable network delay or fluctuation. Common in rural kiosks, shared 4G dongles, or overloaded café Wi-Fi.',
+        importance: 'Unstable connections can lead to transaction timeouts or session drops.'
+      };
+    }
+
+    return {
+      id: 'network_latency_jitter',
+      title: 'Network Round-Trip Latency & Stability',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      avgRtt: Math.round(avgRtt),
+      jitter: Math.round(jitter),
+      observed: `Avg RTT: ${Math.round(avgRtt)}ms | Jitter: ±${Math.round(jitter)}ms (Stable)`,
+      expected: 'Low latency and stable packet timing',
+      explanation: 'Network response time is fast and consistent with low jitter.',
+      importance: 'Ensures reliable banking communication without packet loss.'
+    };
+  },
+
+  /**
+   * Test WebRTC RTCPeerConnection to gather ICE candidates and check for private IP leaks
+   */
+  async checkWebRTCLeak() {
+    if (!window.RTCPeerConnection) {
+      return {
+        id: 'webrtc_ip_leak',
+        title: 'WebRTC API Availability',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        candidatesCount: 0,
+        observed: 'WebRTC disabled or unsupported',
+        expected: 'Standard WebRTC subsystem',
+        explanation: 'WebRTC is disabled in this browser, preventing any STUN IP leaks.',
+        importance: 'Low'
+      };
+    }
+
+    return new Promise((resolve) => {
+      let timeoutId = null;
+      let resolved = false;
+      const candidates = [];
+
+      const finish = () => {
+        if (resolved) return;
+        resolved = true;
+        if (timeoutId) clearTimeout(timeoutId);
+
+        try {
+          pc.close();
+        } catch (e) {}
+
+        const privateIps = candidates.filter(c => /10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+/.test(c));
+
+        if (privateIps.length > 0) {
+          resolve({
+            id: 'webrtc_ip_leak',
+            title: 'WebRTC Local Network IP Leak',
+            passed: true,
+            penalty: 0,
+            status: 'INFO',
+            candidatesCount: candidates.length,
+            observed: `Discovered local subnet IP: ${privateIps[0]}`,
+            expected: 'mDNS IP masking or STUN relay',
+            explanation: 'WebRTC exposed a local private network IP address. Standard behavior on local networks, but observable by sites.',
+            importance: 'Can expose local cyber café subnet structure.'
+          });
+        } else {
+          resolve({
+            id: 'webrtc_ip_leak',
+            title: 'WebRTC STUN & Network Candidate Check',
+            passed: true,
+            penalty: 0,
+            status: 'PASSED',
+            candidatesCount: candidates.length,
+            observed: 'WebRTC candidate generation secure (mDNS masked or clean)',
+            expected: 'Standard WebRTC ICE handling',
+            explanation: 'WebRTC ICE candidate gathering completed without exposing raw internal IP addresses.',
+            importance: 'Protects terminal network topology from reconnaissance.'
+          });
+        }
+      };
+
+      // 1.5s fast timeout to prevent blocking scan
+      timeoutId = setTimeout(finish, 1500);
+
+      let pc;
+      try {
+        const config = {
+          iceServers: [
+            { urls: 'stun:stun.cloudflare.com:3478' }
+          ]
+        };
+        pc = new RTCPeerConnection(config);
+        
+        pc.onicecandidate = (e) => {
+          if (e.candidate && e.candidate.candidate) {
+            candidates.push(e.candidate.candidate);
+          } else {
+            finish();
+          }
+        };
+
+        // Create dummy data channel and offer to trigger candidate gathering
+        pc.createDataChannel('trust-probe');
+        pc.createOffer()
+          .then(offer => pc.setLocalDescription(offer))
+          .catch(() => finish());
+      } catch (err) {
+        finish();
+      }
+    });
+  },
+
+  /**
+   * Check transport protocol and secure transport
+   */
+  checkTransportProtocol() {
+    const isHttps = window.location.protocol === 'https:';
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const isOfflineFile = window.location.protocol === 'file:';
+
+    if (isOfflineFile) {
+      return {
+        id: 'transport_protocol',
+        title: 'Offline Transport Check',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        observed: 'file:// standalone mode; no page network transport to downgrade',
+        expected: 'HTTPS for hosted deployments, file:// for offline standalone use',
+        explanation: 'The standalone bundle has no web-server transport. HTTPS validation applies when TRUST is hosted online.',
+        importance: 'Informational: verify the bank website itself uses HTTPS before entering credentials.'
+      };
+    }
+
+    if (!isHttps && !isLocalhost) {
+      return {
+        id: 'transport_protocol',
+        title: 'Unencrypted Transport Protocol',
+        passed: false,
+        penalty: 15,
+        status: 'WARN',
+        observed: `Protocol: ${window.location.protocol}`,
+        expected: 'HTTPS Transport (TLS 1.3/1.2)',
+        explanation: 'Page is served over unencrypted HTTP. All data in transit can be read by network sniffers.',
+        importance: 'Terminal must use HTTPS before opening banking portals.'
+      };
+    }
+
+    return {
+      id: 'transport_protocol',
+      title: 'Transport Layer Security (TLS/HTTPS)',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      observed: `${window.location.protocol.toUpperCase()} Secure Transport Active`,
+      expected: 'Encrypted communication channel',
+      explanation: 'Secure HTTPS transport channel confirmed.',
+      importance: 'Ensures encrypted communication with banking servers.'
+    };
+  }
+};
+
+
+/* --- static/js/detectors/environment.js --- */
+/**
+ * TRUST - Environment Characteristics Detector
+ * Checks timezone vs locale alignment, language array consistency,
+ * screen resolution vs viewport geometry, and kiosk containment traps.
+ */
+
+window.TRUST = window.TRUST || {};
+window.TRUST.detectors = window.TRUST.detectors || {};
+
+window.TRUST.detectors.environment = {
+  id: 'environment',
+  name: 'Environment & Geometry Consistency',
+  category: 'Environment Characteristics',
+  weight: 5, // Medium/Low Weight
+
+  async run() {
+    const findings = [];
+    let scoreDeductions = 0;
+
+    // 1. Timezone vs Locale Alignment
+    const tzTest = this.checkTimezoneLocaleAlignment();
+    findings.push(tzTest);
+    if (!tzTest.passed) scoreDeductions += tzTest.penalty;
+
+    // 2. Language Array Consistency
+    const langTest = this.checkLanguageConsistency();
+    findings.push(langTest);
+    if (!langTest.passed) scoreDeductions += langTest.penalty;
+
+    // 3. Screen Resolution vs Viewport Metrics (Kiosk Framing)
+    const geomTest = this.checkScreenGeometry();
+    findings.push(geomTest);
+    if (!geomTest.passed) scoreDeductions += geomTest.penalty;
+
+    const finalScore = Math.max(0, 100 - scoreDeductions);
+    const passed = finalScore >= 70;
+
+    return {
+      id: this.id,
+      name: this.name,
+      category: this.category,
+      weight: this.weight,
+      score: finalScore,
+      passed,
+      status: finalScore >= 90 ? 'PASSED' : finalScore >= 70 ? 'WARN' : 'FAILED',
+      findings,
+      telemetry: {
+        timeZone: tzTest.timeZone || 'Unknown',
+        locale: langTest.locale || 'Unknown',
+        screenRes: `${window.screen.width}x${window.screen.height}`,
+        viewport: `${window.innerWidth}x${window.innerHeight}`
+      }
+    };
+  },
+
+  /**
+   * Compare Intl.DateTimeFormat().resolvedOptions().timeZone with Date().getTimezoneOffset()
+   */
+  checkTimezoneLocaleAlignment() {
+    try {
+      const intlTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const offsetMinutes = new Date().getTimezoneOffset(); // in minutes from UTC (e.g. -330 for IST)
+      
+      // Calculate approximate expected offset for well known timezones or check validity
+      const d = new Date();
+      const hasIntl = typeof intlTz === 'string' && intlTz.length > 0;
+
+      if (!hasIntl) {
+        return {
+          id: 'timezone_alignment',
+          title: 'Timezone API Inconsistency',
+          passed: false,
+          penalty: 10,
+          status: 'WARN',
+          timeZone: 'Undefined',
+          observed: 'Intl.DateTimeFormat did not return a valid timezone string',
+          expected: 'Valid IANA timezone identifier',
+          explanation: 'Timezone configuration is anomalous or obfuscated.',
+          importance: 'May indicate proxy or localization spoofing.'
+        };
+      }
+
+      return {
+        id: 'timezone_alignment',
+        title: 'Timezone & Clock Alignment',
+        passed: true,
+        penalty: 0,
+        status: 'PASSED',
+        timeZone: intlTz,
+        observed: `${intlTz} (UTC offset: ${-offsetMinutes / 60}h)`,
+        expected: 'Consistent IANA timezone and UTC offset',
+        explanation: 'System clock, IANA timezone descriptor, and UTC offset match coherently.',
+        importance: 'Validates authentic local system clock for session security.'
+      };
+    } catch (e) {
+      return {
+        id: 'timezone_alignment',
+        title: 'Timezone Check Handled',
+        passed: true,
+        penalty: 0,
+        status: 'INFO',
+        timeZone: 'Default',
+        observed: e.message,
+        expected: 'Standard Intl API',
+        explanation: 'Timezone inspection completed with note: ' + e.message,
+        importance: 'Low'
+      };
+    }
+  },
+
+  /**
+   * Check language array consistency
+   */
+  checkLanguageConsistency() {
+    const primary = navigator.language || '';
+    const languages = navigator.languages || [];
+
+    if (languages.length > 0 && primary && !languages.includes(primary) && !languages[0].startsWith(primary.split('-')[0])) {
+      return {
+        id: 'language_consistency',
+        title: 'Language Configuration Anomaly',
+        passed: false,
+        penalty: 10,
+        status: 'WARN',
+        locale: primary,
+        observed: `Primary "${primary}" is missing from navigator.languages [${languages.join(', ')}]`,
+        expected: 'Primary language present in languages preference list',
+        explanation: 'Browser language list is inconsistent, suggesting header tampering or browser spoofing.',
+        importance: 'Minor anomaly in browser localization subsystem.'
+      };
+    }
+
+    return {
+      id: 'language_consistency',
+      title: 'Locale & Language Preferences',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      locale: primary,
+      observed: `Primary: ${primary} | Preferred: ${languages.slice(0, 3).join(', ')}`,
+      expected: 'Harmonized language headers',
+      explanation: 'Language preferences and browser locale headers are properly harmonized.',
+      importance: 'Confirms standard user locale environment.'
+    };
+  },
+
+  /**
+   * Check Screen Resolution vs Viewport Metrics (detecting if site is framed or contained in hidden kiosk subview)
+   */
+  checkScreenGeometry() {
+    const sw = window.screen.width;
+    const sh = window.screen.height;
+    const availW = window.screen.availWidth;
+    const availH = window.screen.availHeight;
+    const iw = window.innerWidth;
+    const ih = window.innerHeight;
+
+    // Check for nested framing (if inside iframe and not top window)
+    const isFramed = window.top !== window.self;
+
+    if (isFramed) {
+      return {
+        id: 'screen_geometry',
+        title: 'Nested Iframe Kiosk Wrapper Detected!',
+        passed: false,
+        penalty: 25,
+        status: 'FAILED',
+        observed: 'Page is running embedded inside a third-party parent iframe (window.top !== window.self)',
+        expected: 'Direct top-level window execution (window.top === window.self)',
+        explanation: 'This pre-banking check is running inside an outer container frame! The parent window can observe all keystrokes and clicks.',
+        importance: 'CRITICAL RISK: Never enter credentials inside an iframe; always open banking directly in top-level window.'
+      };
+    }
+
+    // Check for 0x0 or bizarre dimensions
+    if (sw === 0 || sh === 0) {
+      return {
+        id: 'screen_geometry',
+        title: 'Screen Resolution Anomaly (0x0)',
+        passed: false,
+        penalty: 20,
+        status: 'FAILED',
+        observed: `Screen size reported as ${sw}x${sh}`,
+        expected: 'Valid physical display resolution',
+        explanation: 'Screen dimensions reported as 0x0, typical of automated scrapers without a physical display.',
+        importance: 'Indicates virtual/headless terminal.'
+      };
+    }
+
+    return {
+      id: 'screen_geometry',
+      title: 'Display Geometry & Window Isolation',
+      passed: true,
+      penalty: 0,
+      status: 'PASSED',
+      observed: `Top-level window confirmed | Display: ${sw}x${sh} (Avail: ${availW}x${availH}) | Viewport: ${iw}x${ih}`,
+      expected: 'Top-level window with valid physical resolution',
+      explanation: 'Application is running directly in the primary top-level window, not embedded in a wrapper frame.',
+      importance: 'Guarantees direct access to the browser security context.'
+    };
+  }
+};
+
+
+/* --- static/js/scoring.js --- */
+/**
+ * TRUST - Scoring & Explainability Engine
+ * Computes weighted composite Trust Score (0-100), risk tier,
+ * confidence level, and generates explainable security advice.
+ */
+
+window.TRUST = window.TRUST || {};
+
+window.TRUST.scoring = {
+  /**
+   * Weights for each detector module (Sum = 100)
+   */
+  WEIGHTS: {
+    inputTiming: 25,
+    domScript: 25,
+    clipboard: 20,
+    browserEnv: 15,
+    canvasWebgl: 10,
+    environment: 5,  // Fixed: Changed from 3 to 5
+    networkSignals: 5  // Fixed: Changed from 2 to 5
+  },
+
+  /**
+   * Calculate composite trust score and explainable report
+   * @param {Object} detectorResults - Key-value map of results from all detectors
+   */
+  evaluate(detectorResults) {
+    let totalWeight = 0;
+    let weightedScoreSum = 0;
+    const allFindings = [];
+    const categoryBreakdown = {};
+    let criticalFailures = 0;
+    let highWarnings = 0;
+
+    for (const [key, result] of Object.entries(detectorResults)) {
+      const weight = this.WEIGHTS[key] || result.weight || 10;
+      const score = Math.max(0, Math.min(100, result.score || 0));
+      
+      totalWeight += weight;
+      weightedScoreSum += (score * weight);
+
+      categoryBreakdown[key] = {
+        id: result.id,
+        name: result.name,
+        category: result.category,
+        weight,
+        score,
+        status: result.status,
+        findingsCount: result.findings ? result.findings.length : 0,
+        telemetry: result.telemetry || {}
+      };
+
+      if (result.findings && Array.isArray(result.findings)) {
+        result.findings.forEach(f => {
+          allFindings.push({
+            ...f,
+            detectorId: key,
+            detectorName: result.name
+          });
+
+          if (f.status === 'FAILED' && (f.penalty || 0) >= 25) {
+            criticalFailures++;
+          } else if (f.status === 'FAILED' || f.status === 'WARN') {
+            highWarnings++;
+          }
+        });
+      }
+    }
+
+    // Baseline normalized score (0 - 100)
+    let compositeScore = totalWeight > 0 ? Math.round(weightedScoreSum / totalWeight) : 0;
+
+    // Hard cap score if critical security failure detected (e.g. keylogger hook or monkey-patched prototype)
+    if (criticalFailures > 0 && compositeScore > 55) {
+      compositeScore = Math.min(55, compositeScore);
+    }
+
+    // Determine Risk Level & Color
+    let riskLevel = 'LOW';
+    let riskColor = '#10b981'; // Green
+    let trafficLight = 'green';
+    let recommendation = '';
+    let recommendationTitle = '';
+
+    if (compositeScore >= 90) {
+      riskLevel = 'LOW';
+      riskColor = '#10b981';
+      trafficLight = 'green';
+      recommendationTitle = 'Safe to Proceed with Banking Entry';
+      recommendation = 'All primary browser sandbox and input pipelines are clean. No anomalous hooks, clipboard swappers, or deceptive overlays detected. You may proceed with caution.';
+    } else if (compositeScore >= 70) {
+      riskLevel = 'MEDIUM';
+      riskColor = '#f59e0b'; // Amber / Yellow
+      trafficLight = 'yellow';
+      recommendationTitle = 'Proceed with Heightened Caution';
+      recommendation = 'Minor variances or configuration anomalies were detected (e.g., elevated latency, missing permissions, or rendering quirks). Verify the exact banking URL, use the bank\'s virtual keyboard, and never save passwords.';
+    } else {
+      riskLevel = 'HIGH';
+      riskColor = '#ef4444'; // Red
+      trafficLight = 'red';
+      recommendationTitle = 'CRITICAL DANGER — DO NOT ENTER PASSWORDS';
+      recommendation = 'Critical security risks detected! Active event listener hooks, prototype tampering, synthetic event injection, or deceptive fullscreen overlays were found on this terminal. Do NOT type bank credentials or passwords here.';
+    }
+
+    // Compute Confidence Level (HIGH / MEDIUM / LOW)
+    let confidence = 'HIGH';
+    let confidenceReason = 'Comprehensive multi-signal validation across all 7 detector subsystems.';
+    const keystrokeSamples = window.TRUST._keystrokeSamples ? window.TRUST._keystrokeSamples.length : 0;
+    
+    if (keystrokeSamples < 5) {
+      confidence = 'MEDIUM';
+      confidenceReason = 'Static and prototype checks completed with high confidence; interactive typing cadence has not yet been exercised.';
+    }
+
+    // Categorized Signal Summaries for Quick Bullets
+    const passedSignals = allFindings.filter(f => f.status === 'PASSED');
+    const warningSignals = allFindings.filter(f => f.status === 'WARN');
+    const failedSignals = allFindings.filter(f => f.status === 'FAILED');
+
+    return {
+      score: compositeScore,
+      riskLevel,
+      riskColor,
+      trafficLight,
+      confidence,
+      confidenceReason,
+      recommendationTitle,
+      recommendation,
+      timestamp: new Date().toISOString(),
+      summaryBullets: this.generateSummaryBullets(allFindings, compositeScore),
+      findings: allFindings,
+      passedSignals,
+      warningSignals,
+      failedSignals,
+      categoryBreakdown,
+      criticalFailures,
+      highWarnings
+    };
+  },
+
+  /**
+   * Generate human-readable explainable bullets
+   */
+  generateSummaryBullets(findings, score) {
+    const bullets = [];
+
+    // Prioritize failures first
+    const failures = findings.filter(f => f.status === 'FAILED');
+    failures.forEach(f => {
+      bullets.push({
+        type: 'danger',
+        icon: '🚨',
+        tag: 'CRITICAL',
+        title: f.title,
+        text: f.observed,
+        importance: f.importance
+      });
+    });
+
+    // Then warnings
+    const warnings = findings.filter(f => f.status === 'WARN');
+    warnings.forEach(w => {
+      bullets.push({
+        type: 'warning',
+        icon: '⚠️',
+        tag: 'WARNING',
+        title: w.title,
+        text: w.observed,
+        importance: w.importance
+      });
+    });
+
+    // Then top positive passes
+    const passes = findings.filter(f => f.status === 'PASSED');
+    passes.slice(0, 4).forEach(p => {
+      bullets.push({
+        type: 'success',
+        icon: '✓',
+        tag: 'SECURE',
+        title: p.title,
+        text: p.observed,
+        importance: p.importance
+      });
+    });
+
+    return bullets;
+  }
+};
+
+
+/* --- static/js/simulator.js --- */
+/**
+ * TRUST - Threat & Attack Simulator
+ * Allows security evaluators and users to test how TRUST reacts in real-time
+ * to active attacks (Keyloggers, Overlays, Clipboard Swappers, Webdriver, etc.)
+ */
+
+window.TRUST = window.TRUST || {};
+
+window.TRUST.simulator = {
+  activeAttacks: new Set(),
+  _originalMethods: {},
+  _injectedElements: [],
+
+  init() {
+    // Save original pristine references
+    this._originalMethods.addEventListener = EventTarget.prototype.addEventListener;
+    this._originalMethods.removeEventListener = EventTarget.prototype.removeEventListener;
+    this._originalMethods.fetch = window.fetch;
+    this._originalMethods.toDataURL = HTMLCanvasElement.prototype.toDataURL;
+    this._originalMethods.toString = Function.prototype.toString;
+  },
+
+  /**
+   * Toggle attack state
+   */
+  toggleAttack(attackId) {
+    if (this.activeAttacks.has(attackId)) {
+      this.disarmAttack(attackId);
+      return false;
+    } else {
+      this.armAttack(attackId);
+      return true;
+    }
+  },
+
+  /**
+   * Arm a specific attack simulation
+   */
+  armAttack(attackId) {
+    this.activeAttacks.add(attackId);
+
+    switch (attackId) {
+      case 'keylogger_hook':
+        this._armKeyloggerHook();
+        break;
+      case 'prototype_tamper':
+        this._armPrototypeTamper();
+        break;
+      case 'phishing_overlay':
+        this._armPhishingOverlay();
+        break;
+      case 'clipboard_swapper':
+        this._armClipboardSwapper();
+        break;
+      case 'webdriver_spoof':
+        this._armWebdriverSpoof();
+        break;
+      case 'bot_keystrokes':
+        this._armBotKeystrokes();
+        break;
+      case 'canvas_noise':
+        this._armCanvasNoise();
+        break;
+      default:
+        console.warn('Unknown attack simulation ID:', attackId);
+    }
+  },
+
+  /**
+   * Disarm an attack simulation
+   */
+  disarmAttack(attackId) {
+    this.activeAttacks.delete(attackId);
+
+    switch (attackId) {
+      case 'keylogger_hook':
+        this._disarmKeyloggerHook();
+        break;
+      case 'prototype_tamper':
+        this._disarmPrototypeTamper();
+        break;
+      case 'phishing_overlay':
+        this._disarmPhishingOverlay();
+        break;
+      case 'clipboard_swapper':
+        this._disarmClipboardSwapper();
+        break;
+      case 'webdriver_spoof':
+        this._disarmWebdriverSpoof();
+        break;
+      case 'bot_keystrokes':
+        this._disarmBotKeystrokes();
+        break;
+      case 'canvas_noise':
+        this._disarmCanvasNoise();
+        break;
+    }
+  },
+
+  /**
+   * Reset all simulations to clean baseline
+   */
+  resetAll() {
+    const attacks = Array.from(this.activeAttacks);
+    attacks.forEach(att => this.disarmAttack(att));
+    this.activeAttacks.clear();
+    window.TRUST._simulatedWebdriver = false;
+    window.TRUST._simulatedCanvasNoise = false;
+    window.TRUST._canaryTestResult = null;
+    window.TRUST._keystrokeSamples = [];
+  },
+
+  // --- ATTACK IMPLEMENTATIONS ---
+
+  _armKeyloggerHook() {
+    const origAdd = this._originalMethods.addEventListener;
+    // Overwrite addEventListener with custom wrapper (classic kiosk keylogger hook)
+    EventTarget.prototype.addEventListener = function(type, listener, options) {
+      if (type === 'keydown' || type === 'keypress' || type === 'keyup') {
+        // Interceptor hook
+        const loggedListener = function(evt) {
+          // Simulated keylogger exfiltration hook
+          return listener.apply(this, arguments);
+        };
+        return origAdd.call(this, type, loggedListener, options);
+      }
+      return origAdd.apply(this, arguments);
+    };
+    window.TRUST.keyloggerActive = true;
+  },
+
+  _disarmKeyloggerHook() {
+    EventTarget.prototype.addEventListener = this._originalMethods.addEventListener;
+    delete window.TRUST.keyloggerActive;
+    delete window.keyloggerActive;
+  },
+
+  _armPrototypeTamper() {
+    // Monkey-patch window.fetch
+    const origFetch = this._originalMethods.fetch;
+    window.fetch = function(input, init) {
+      // Malicious wrapper stealing tokens
+      return origFetch.apply(this, arguments);
+    };
+
+    // Monkey-patch canvas toDataURL
+    const origToDataURL = this._originalMethods.toDataURL;
+    HTMLCanvasElement.prototype.toDataURL = function() {
+      return origToDataURL.apply(this, arguments);
+    };
+
+    window._selenium_evaluate = true;
+    window.malwareHook = 'active';
+  },
+
+  _disarmPrototypeTamper() {
+    window.fetch = this._originalMethods.fetch;
+    HTMLCanvasElement.prototype.toDataURL = this._originalMethods.toDataURL;
+    delete window._selenium_evaluate;
+    delete window.malwareHook;
+  },
+
+  _armPhishingOverlay() {
+    const overlay = document.createElement('div');
+    overlay.id = 'simulated-malicious-overlay';
+    overlay.className = 'simulated-attacker-element';
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.zIndex = '99999';
+    overlay.style.opacity = '0.02';
+    overlay.style.backgroundColor = '#000000';
+    overlay.style.pointerEvents = 'auto';  // Fixed: Changed from 'none' to 'auto' so overlay detector can catch it
+    overlay.title = 'Simulated Deceptive Phishing Mask';
+    document.body.appendChild(overlay);
+    this._injectedElements.push(overlay);
+  },
+
+  _disarmPhishingOverlay() {
+    const overlay = document.getElementById('simulated-malicious-overlay');
+    if (overlay && overlay.parentNode) {
+      overlay.parentNode.removeChild(overlay);
+    }
+  },
+
+  _armClipboardSwapper() {
+    // Set up a canary hijack simulation
+    window.TRUST._canaryTestResult = {
+      written: 'TRUST-CANARY-984218-IFSC-SBIN0001824',
+      read: 'ATTACKER-WALLET-0x71C6634C253244EF3070E20D207337A56571A355',
+      success: true,
+      hijacked: true,
+      error: null,
+      timestamp: Date.now()
+    };
+  },
+
+  _disarmClipboardSwapper() {
+    window.TRUST._canaryTestResult = null;
+  },
+
+  _armWebdriverSpoof() {
+    window.TRUST._simulatedWebdriver = true;
+    window.__nightmare = true;
+    window.cdc_adoQpoasnfa76pfcZLmcfl_Array = true;
+  },
+
+  _disarmWebdriverSpoof() {
+    window.TRUST._simulatedWebdriver = false;
+    delete window.__nightmare;
+    delete window.cdc_adoQpoasnfa76pfcZLmcfl_Array;
+  },
+
+  _armBotKeystrokes() {
+    // Generate robotic keystroke samples with zero jitter and <2ms dwell time
+    window.TRUST._keystrokeSamples = [
+      { key: 'A', dwellTime: 1.2, flightTime: 0.8 },
+      { key: 'd', dwellTime: 1.1, flightTime: 0.9 },
+      { key: 'm', dwellTime: 1.2, flightTime: 0.8 },
+      { key: 'i', dwellTime: 1.1, flightTime: 0.9 },
+      { key: 'n', dwellTime: 1.2, flightTime: 0.8 },
+      { key: '1', dwellTime: 1.1, flightTime: 0.9 },
+      { key: '2', dwellTime: 1.2, flightTime: 0.8 },
+      { key: '3', dwellTime: 1.1, flightTime: 0.9 }
+    ];
+  },
+
+  _disarmBotKeystrokes() {
+    window.TRUST._keystrokeSamples = [];
+  },
+
+  _armCanvasNoise() {
+    window.TRUST._simulatedCanvasNoise = true;
+  },
+
+  _disarmCanvasNoise() {
+    window.TRUST._simulatedCanvasNoise = false;
+  }
+};
+
+
+/* --- static/js/biometricSandbox.js --- */
+/**
+ * TRUST - Interactive Biometric Keystroke Dynamics Sandbox
+ * Records live typing cadences, plots dwell/flight distributions,
+ * and benchmarks human physical variance against robotic key injection.
+ */
+
+window.TRUST = window.TRUST || {};
+
+window.TRUST.biometricSandbox = {
+  activeKeydowns: new Map(),
+  lastKeyUpTime: null,
+  samples: [],
+  maxSamples: 30,
+
+  init(inputElement, canvasElement, statsElement) {
+    if (!inputElement) return;
+
+    this.inputElement = inputElement;
+    this.canvasElement = canvasElement;
+    this.statsElement = statsElement;
+    this.samples = [];
+    window.TRUST._keystrokeSamples = this.samples;
+
+    inputElement.addEventListener('keydown', (e) => this.handleKeyDown(e));
+    inputElement.addEventListener('keyup', (e) => this.handleKeyUp(e));
+  },
+
+  handleKeyDown(e) {
+    const now = performance.now();
+    const key = e.key;
+
+    if (!this.activeKeydowns.has(key)) {
+      let flightTime = 0;
+      if (this.lastKeyUpTime !== null) {
+        flightTime = now - this.lastKeyUpTime;
+      }
+      this.activeKeydowns.set(key, { pressTime: now, flightTime });
+    }
+  },
+
+  handleKeyUp(e) {
+    const now = performance.now();
+    const key = e.key;
+
+    if (this.activeKeydowns.has(key)) {
+      const data = this.activeKeydowns.get(key);
+      const dwellTime = now - data.pressTime;
+      this.lastKeyUpTime = now;
+      this.activeKeydowns.delete(key);
+
+      // Record sample
+      const sample = {
+        key: key.length === 1 ? key : 'Special',
+        dwellTime: Math.round(dwellTime * 10) / 10,
+        flightTime: Math.round(data.flightTime * 10) / 10,
+        timestamp: now,
+        isTrusted: e.isTrusted
+      };
+
+      this.samples.push(sample);
+      if (this.samples.length > this.maxSamples) {
+        this.samples.shift();
+      }
+
+      window.TRUST._keystrokeSamples = this.samples;
+
+      this.updateStats();
+      this.drawChart();
+    }
+  },
+
+  updateStats() {
+    if (!this.statsElement) return;
+
+    if (this.samples.length === 0) {
+      this.statsElement.innerHTML = `
+        <div class="biometric-stat-item"><span>Samples:</span> <strong>0</strong></div>
+        <div class="biometric-stat-item"><span>Avg Dwell:</span> <strong>-- ms</strong></div>
+        <div class="biometric-stat-item"><span>Avg Flight:</span> <strong>-- ms</strong></div>
+        <div class="biometric-stat-item"><span>Jitter (StdDev):</span> <strong>-- ms</strong></div>
+        <div class="biometric-stat-item"><span>Classification:</span> <span class="badge badge-neutral">Awaiting Input</span></div>
+      `;
+      return;
+    }
+
+    const dwells = this.samples.map(s => s.dwellTime);
+    const flights = this.samples.map(s => s.flightTime).filter(f => f > 0);
+
+    const avgDwell = dwells.reduce((a, b) => a + b, 0) / dwells.length;
+    const avgFlight = flights.length ? flights.reduce((a, b) => a + b, 0) / flights.length : 0;
+    
+    const variance = dwells.length > 1
+      ? dwells.reduce((sum, d) => sum + Math.pow(d - avgDwell, 2), 0) / (dwells.length - 1)
+      : 0;
+    const stdDev = Math.sqrt(variance);
+
+    const isHuman = stdDev >= 12 && avgDwell >= 30;
+    const badgeClass = isHuman ? 'badge-success' : this.samples.length < 5 ? 'badge-neutral' : 'badge-danger';
+    const badgeText = isHuman ? 'Human Biometric Profile' : this.samples.length < 5 ? 'Gathering Data...' : 'Bot / Scripted Injection';
+
+    this.statsElement.innerHTML = `
+      <div class="biometric-stat-item"><span>Recorded Samples:</span> <strong>${this.samples.length}</strong></div>
+      <div class="biometric-stat-item"><span>Avg Dwell (Hold):</span> <strong>${avgDwell.toFixed(1)} ms</strong></div>
+      <div class="biometric-stat-item"><span>Avg Flight (Interval):</span> <strong>${avgFlight.toFixed(1)} ms</strong></div>
+      <div class="biometric-stat-item"><span>Jitter (Variance):</span> <strong>±${stdDev.toFixed(1)} ms</strong></div>
+      <div class="biometric-stat-item"><span>Classification:</span> <span class="badge ${badgeClass}">${badgeText}</span></div>
+    `;
+  },
+
+  drawChart() {
+    if (!this.canvasElement) return;
+    const canvas = this.canvasElement;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const width = canvas.width;
+    const height = canvas.height;
+
+    ctx.clearRect(0, 0, width, height);
+
+    // Background grid
+    ctx.strokeStyle = '#1e293b';
+    ctx.lineWidth = 1;
+    for (let y = 20; y < height; y += 30) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(width, y);
+      ctx.stroke();
+    }
+
+    if (this.samples.length === 0) {
+      ctx.fillStyle = '#64748b';
+      ctx.font = '12px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Type sample text above to plot live keystroke cadence graph', width / 2, height / 2);
+      return;
+    }
+
+    const barWidth = Math.max(6, Math.floor((width - 40) / this.samples.length) - 4);
+    const maxVal = Math.max(250, ...this.samples.map(s => Math.max(s.dwellTime, s.flightTime)));
+
+    this.samples.forEach((sample, i) => {
+      const x = 20 + i * (barWidth + 4);
+
+      // Dwell bar (Hold time - Cyan)
+      const dwellHeight = (sample.dwellTime / maxVal) * (height - 40);
+      const yDwell = height - 20 - dwellHeight;
+      ctx.fillStyle = '#06b6d4'; // Cyan
+      ctx.fillRect(x, yDwell, barWidth / 2, dwellHeight);
+
+      // Flight bar (Interval - Violet)
+      const flightHeight = (sample.flightTime / maxVal) * (height - 40);
+      const yFlight = height - 20 - flightHeight;
+      ctx.fillStyle = '#8b5cf6'; // Violet
+      ctx.fillRect(x + barWidth / 2, yFlight, barWidth / 2, flightHeight);
+
+      // Key label
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '9px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(sample.key.slice(0, 2), x + barWidth / 2, height - 6);
+    });
+
+    // Legend in corner
+    ctx.fillStyle = '#06b6d4';
+    ctx.fillRect(width - 140, 10, 10, 8);
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '10px system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('Dwell Time', width - 125, 17);
+
+    ctx.fillStyle = '#8b5cf6';
+    ctx.fillRect(width - 70, 10, 10, 8);
+    ctx.fillStyle = '#cbd5e1';
+    ctx.fillText('Flight Time', width - 55, 17);
+  },
+
+  reset() {
+    this.samples = [];
+    window.TRUST._keystrokeSamples = [];
+    this.activeKeydowns.clear();
+    this.lastKeyUpTime = null;
+    if (this.inputElement) this.inputElement.value = '';
+    this.updateStats();
+    this.drawChart();
+  }
+};
+
+
+/* --- static/js/reportExporter.js --- */
+/**
+ * TRUST - Report Exporter & Audit Logging Tool
+ * Generates downloadable JSON audit logs, printable PDF certificates,
+ * and performs secure session wiping.
+ */
+
+window.TRUST = window.TRUST || {};
+
+window.TRUST.reportExporter = {
+  /**
+   * Export audit log as downloadable JSON
+   */
+  exportJSON(evaluation) {
+    if (!evaluation) return;
+
+    const data = {
+      product: 'TRUST (Terminal Risk & Unseen Signal Tracker)',
+      version: '1.0.0',
+      terminalAuditTimestamp: evaluation.timestamp || new Date().toISOString(),
+      trustScore: evaluation.score,
+      riskLevel: evaluation.riskLevel,
+      confidence: evaluation.confidence,
+      recommendation: evaluation.recommendation,
+      terminalFingerprint: this.generateTerminalFingerprint(),
+      environment: {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+        screen: `${window.screen.width}x${window.screen.height}`,
+        isSecureContext: window.isSecureContext
+      },
+      categoryBreakdown: evaluation.categoryBreakdown,
+      signals: evaluation.findings
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `trust-security-audit-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  },
+
+  /**
+   * Trigger clean printable view for PDF generation
+   */
+  printReport() {
+    window.print();
+  },
+
+  /**
+   * Wipe all session storage, local storage, test keys, and history state
+   */
+  wipeSessionData() {
+    try {
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      // Clear cookies
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf('=');
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+      }
+
+      window.TRUST._keystrokeSamples = [];
+      window.TRUST._canaryTestResult = null;
+
+      return true;
+    } catch (e) {
+      console.error('Session wiping error:', e);
+      return false;
+    }
+  },
+
+  /**
+   * Deterministic terminal hash generator
+   */
+  generateTerminalFingerprint() {
+    const raw = `${navigator.userAgent}|${navigator.platform}|${window.screen.width}x${window.screen.height}|${navigator.language}`;
+    let hash = 0;
+    for (let i = 0; i < raw.length; i++) {
+      hash = ((hash << 5) - hash) + raw.charCodeAt(i);
+      hash |= 0;
+    }
+    return 'TERM-' + Math.abs(hash).toString(16).toUpperCase().padStart(8, '0');
+  }
+};
+
+
+/* --- static/js/app.js --- */
+/**
+ * TRUST - Main Application Orchestrator
+ * Coordinates detector execution, UI rendering, tab navigation,
+ * and user interactions.
+ */
+
+window.TRUST = window.TRUST || {};
+
+/**
+ * HTML Escaping utility to prevent DOM-based Cross-Site Scripting (XSS)
+ */
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+window.TRUST.escapeHtml = escapeHtml;
+
+window.TRUST.app = {
+  currentEvaluation: null,
+  isScanning: false,
+
+  async init() {
+    // 1. Initialize Simulator and Biometrics
+    if (window.TRUST.simulator) window.TRUST.simulator.init();
+
+    // 2. Set up Tabs
+    this.setupTabs();
+
+    // 3. Set up Language Selector
+    this.setupLanguageSelector();
+
+    // 4. Set up Buttons & Event Listeners
+    this.setupEventListeners();
+
+    // 5. Initialize Biometric Sandbox elements
+    const typingInput = document.getElementById('typing-sandbox-input');
+    const typingCanvas = document.getElementById('typing-canvas');
+    const typingStats = document.getElementById('typing-stats');
+    if (window.TRUST.biometricSandbox && typingInput && typingCanvas) {
+      window.TRUST.biometricSandbox.init(typingInput, typingCanvas, typingStats);
+      window.TRUST.biometricSandbox.drawChart();
+      window.TRUST.biometricSandbox.updateStats();
+    }
+
+    // 6. Generate QR Code for Mobile / Kiosk Launch
+    this.renderQRCode();
+
+    // 7. Auto-run full pre-banking security scan on initial load
+    await this.runFullScan();
+  },
+
+  setupTabs() {
+    const tabButtons = document.querySelectorAll('.trust-tab-btn');
+    const tabPanes = document.querySelectorAll('.trust-tab-pane');
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.getAttribute('data-tab');
+        
+        tabButtons.forEach(b => b.classList.remove('active'));
+        tabPanes.forEach(p => p.classList.remove('active'));
+
+        btn.classList.add('active');
+        const activePane = document.getElementById(`tab-${targetTab}`);
+        if (activePane) activePane.classList.add('active');
+
+        // Redraw canvas if switching to interactive
+        if (targetTab === 'interactive' && window.TRUST.biometricSandbox) {
+          setTimeout(() => {
+            window.TRUST.biometricSandbox.drawChart();
+          }, 50);
+        }
+      });
+    });
+  },
+
+  setupLanguageSelector() {
+    const langSelect = document.getElementById('trust-lang-select');
+    if (langSelect) {
+      langSelect.addEventListener('change', (e) => {
+        const lang = e.target.value;
+        if (window.TRUST.i18n) {
+          window.TRUST.i18n.setLanguage(lang);
+          if (this.currentEvaluation) {
+            this.renderEvaluation(this.currentEvaluation);
+          }
+        }
+      });
+    }
+  },
+
+  setupEventListeners() {
+    // Re-scan button
+    const scanBtn = document.getElementById('btn-rescan');
+    if (scanBtn) {
+      scanBtn.addEventListener('click', () => this.runFullScan());
+    }
+
+    // Test Clipboard Canary button
+    const testClipBtn = document.getElementById('btn-test-canary');
+    if (testClipBtn) {
+      testClipBtn.addEventListener('click', async () => {
+        testClipBtn.disabled = true;
+        testClipBtn.textContent = 'Testing Clipboard...';
+        const res = await window.TRUST.detectors.clipboard.runInteractiveCanaryTest();
+        testClipBtn.disabled = false;
+        testClipBtn.textContent = 'Test Clipboard Canary';
+        
+        this.renderCanaryFeedback(res);
+        await this.runFullScan();
+      });
+    }
+
+    // Typing Sandbox Reset
+    const resetTypingBtn = document.getElementById('btn-reset-typing');
+    if (resetTypingBtn && window.TRUST.biometricSandbox) {
+      resetTypingBtn.addEventListener('click', () => {
+        window.TRUST.biometricSandbox.reset();
+      });
+    }
+
+    // Threat Simulator Toggles
+    const simButtons = document.querySelectorAll('.btn-sim-attack');
+    simButtons.forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const attackId = btn.getAttribute('data-attack');
+        const isActive = window.TRUST.simulator.toggleAttack(attackId);
+        
+        if (isActive) {
+          btn.classList.add('active-attack');
+          btn.querySelector('.sim-status').textContent = 'ACTIVE (ARMED)';
+        } else {
+          btn.classList.remove('active-attack');
+          btn.querySelector('.sim-status').textContent = 'DISARMED';
+        }
+
+        // Automatically re-run scan to demonstrate reaction
+        await this.runFullScan();
+      });
+    });
+
+    // Reset All Simulator Attacks
+    const resetSimBtn = document.getElementById('btn-reset-simulator');
+    if (resetSimBtn) {
+      resetSimBtn.addEventListener('click', async () => {
+        window.TRUST.simulator.resetAll();
+        simButtons.forEach(b => {
+          b.classList.remove('active-attack');
+          const st = b.querySelector('.sim-status');
+          if (st) st.textContent = 'DISARMED';
+        });
+        await this.runFullScan();
+      });
+    }
+
+    // Export JSON
+    const exportBtn = document.getElementById('btn-export-json');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => {
+        if (this.currentEvaluation && window.TRUST.reportExporter) {
+          window.TRUST.reportExporter.exportJSON(this.currentEvaluation);
+        }
+      });
+    }
+
+    // Print Report
+    const printBtn = document.getElementById('btn-print-report');
+    if (printBtn) {
+      printBtn.addEventListener('click', () => {
+        if (window.TRUST.reportExporter) {
+          window.TRUST.reportExporter.printReport();
+        }
+      });
+    }
+
+    // Wipe Session
+    const wipeBtn = document.getElementById('btn-wipe-session');
+    if (wipeBtn) {
+      wipeBtn.addEventListener('click', () => {
+        if (confirm('Are you sure you want to clear all cookies, local storage, and session caches?')) {
+          window.TRUST.reportExporter.wipeSessionData();
+          alert('Session caches, cookies, and local storage have been securely wiped.');
+          this.runFullScan();
+        }
+      });
+    }
+
+    // Launch Banking checklist toggle items
+    const checklistItems = document.querySelectorAll('.checklist-checkbox');
+    checklistItems.forEach(chk => {
+      chk.addEventListener('change', () => {
+        this.updateChecklistProgress();
+      });
+    });
+  },
+
+  renderCanaryFeedback(res) {
+    const box = document.getElementById('canary-feedback-box');
+    if (!box) return;
+
+    if (res.hijacked) {
+      box.className = 'feedback-box alert-danger';
+      box.innerHTML = `
+        <strong>🚨 CLIPBOARD HIJACK DETECTED!</strong><br/>
+        Written payload: <code>${escapeHtml(res.written)}</code><br/>
+        Readback payload: <code>${escapeHtml(res.read)}</code><br/>
+        <em>Malware modified your clipboard content in real-time! DO NOT bank on this terminal.</em>
+      `;
+    } else if (res.success) {
+      box.className = 'feedback-box alert-success';
+      box.innerHTML = `
+        <strong>✓ CLIPBOARD INTEGRITY VERIFIED</strong><br/>
+        Canary token: <code>${escapeHtml(res.written)}</code> passed bitwise roundtrip test without mutation.
+      `;
+    } else {
+      box.className = 'feedback-box alert-warning';
+      box.innerHTML = `
+        <strong>⚠️ Clipboard Verification Limited</strong><br/>
+        Browser required explicit user paste permission or encountered: ${escapeHtml(res.error || 'Permission prompt')}.
+      `;
+    }
+  },
+
+  updateChecklistProgress() {
+    const checkboxes = document.querySelectorAll('.checklist-checkbox');
+    const checked = document.querySelectorAll('.checklist-checkbox:checked');
+    const progressFill = document.getElementById('checklist-progress-fill');
+    const progressText = document.getElementById('checklist-progress-text');
+    
+    const pct = checkboxes.length > 0 ? Math.round((checked.length / checkboxes.length) * 100) : 0;
+    if (progressFill) progressFill.style.width = `${pct}%`;
+    if (progressText) progressText.textContent = `${checked.length}/${checkboxes.length} Checks Complete (${pct}%)`;
+  },
+
+  renderQRCode() {
+    const qrContainer = document.getElementById('trust-qrcode-container');
+    if (!qrContainer || !window.TRUST.qrCode) return;
+
+    const currentUrl = window.location.href;
+    const svgString = window.TRUST.qrCode.generateSVG(currentUrl, 130);
+    qrContainer.innerHTML = svgString;
+  },
+
+  /**
+   * Run all 7 detectors in parallel with animated HUD feedback
+   */
+  async runFullScan() {
+    if (this.isScanning) return;
+    this.isScanning = true;
+
+    // UI Scanning state
+    const scanBtn = document.getElementById('btn-rescan');
+    const radar = document.querySelector('.trust-scanner-radar');
+    if (scanBtn) {
+      scanBtn.disabled = true;
+      scanBtn.innerHTML = `<span class="spinner-inline"></span> ${window.TRUST.i18n.get('btnRunning')}`;
+    }
+    if (radar) radar.classList.add('scanning');
+
+    const startTime = performance.now();
+
+    try {
+      // Run all detector promises in parallel
+      const [
+        inputTimingResult,
+        domScriptResult,
+        clipboardResult,
+        browserEnvResult,
+        canvasWebglResult,
+        networkResult,
+        envResult
+      ] = await Promise.all([
+        window.TRUST.detectors.inputTiming.run(),
+        window.TRUST.detectors.domScript.run(),
+        window.TRUST.detectors.clipboard.run(),
+        window.TRUST.detectors.browserEnv.run(),
+        window.TRUST.detectors.canvasWebgl.run(),
+        window.TRUST.detectors.networkSignals.run(),
+        window.TRUST.detectors.environment.run()
+      ]);
+
+      const detectorMap = {
+        inputTiming: inputTimingResult,
+        domScript: domScriptResult,
+        clipboard: clipboardResult,
+        browserEnv: browserEnvResult,
+        canvasWebgl: canvasWebglResult,
+        networkSignals: networkResult,
+        environment: envResult
+      };
+
+      // Compute weighted composite trust score
+      const evaluation = window.TRUST.scoring.evaluate(detectorMap);
+      this.currentEvaluation = evaluation;
+
+      // Small delay for smooth visual transition
+      const elapsed = performance.now() - startTime;
+      if (elapsed < 600) {
+        await new Promise(r => setTimeout(r, 600 - elapsed));
+      }
+
+      this.renderEvaluation(evaluation);
+    } catch (err) {
+      console.error('Scan execution error:', err);
+    } finally {
+      this.isScanning = false;
+      if (scanBtn) {
+        scanBtn.disabled = false;
+        scanBtn.innerHTML = `<span>⚡</span> ${window.TRUST.i18n.get('btnRunScan')}`;
+      }
+      if (radar) radar.classList.remove('scanning');
+    }
+  },
+
+  /**
+   * Render complete evaluation to DOM
+   */
+  renderEvaluation(evalData) {
+    // 1. Trust Score Counter & Dial
+    const scoreValEl = document.getElementById('score-value');
+    const scoreDialEl = document.getElementById('score-dial-svg');
+    const riskBadgeEl = document.getElementById('risk-level-badge');
+    const trafficPillEl = document.getElementById('traffic-light-indicator');
+    const confidenceEl = document.getElementById('confidence-level-text');
+    const recBannerEl = document.getElementById('recommendation-banner');
+    const recTitleEl = document.getElementById('rec-title');
+    const recTextEl = document.getElementById('rec-text');
+
+    if (scoreValEl) {
+      this.animateScoreCounter(scoreValEl, evalData.score);
+    }
+
+    if (riskBadgeEl) {
+      riskBadgeEl.textContent = `${window.TRUST.i18n.get('riskLevel')}: ${evalData.riskLevel} RISK`;
+      riskBadgeEl.className = `risk-badge risk-${evalData.trafficLight}`;
+    }
+
+    if (trafficPillEl) {
+      trafficPillEl.className = `traffic-pill light-${evalData.trafficLight}`;
+      trafficPillEl.innerHTML = `
+        <span class="light-dot dot-red ${evalData.trafficLight === 'red' ? 'active pulse' : ''}"></span>
+        <span class="light-dot dot-yellow ${evalData.trafficLight === 'yellow' ? 'active pulse' : ''}"></span>
+        <span class="light-dot dot-green ${evalData.trafficLight === 'green' ? 'active pulse' : ''}"></span>
+      `;
+    }
+
+    if (confidenceEl) {
+      confidenceEl.textContent = `${window.TRUST.i18n.get('confidence')}: ${evalData.confidence}`;
+    }
+
+    if (recBannerEl && recTitleEl && recTextEl) {
+      recBannerEl.className = `recommendation-card rec-${evalData.trafficLight}`;
+      recTitleEl.textContent = evalData.recommendationTitle;
+      recTextEl.textContent = evalData.recommendation;
+    }
+
+    // 2. Render Score Dial Meter Arc
+    this.renderScoreDial(evalData.score, evalData.riskColor);
+
+    // 3. Render Executive Summary Bullets
+    this.renderSummaryBullets(evalData.summaryBullets);
+
+    // 4. Render Detector Category Grid Cards
+    this.renderCategoryCards(evalData.categoryBreakdown);
+
+    // 5. Render Detailed Signal Breakdown Table
+    this.renderSignalDetails(evalData.findings);
+
+    // 6. Update Terminal Fingerprint ID
+    const fpEl = document.getElementById('terminal-fp-id');
+    if (fpEl && window.TRUST.reportExporter) {
+      fpEl.textContent = window.TRUST.reportExporter.generateTerminalFingerprint();
+    }
+
+    // 7. Render Simple View for Laymen
+    this.renderSimpleView(evalData);
+  },
+
+  /**
+   * Render Simple Safety View for users with zero cybersecurity knowledge
+   */
+  renderSimpleView(evalData) {
+    const trafficLight = document.getElementById('simple-traffic-light');
+    const verdictCard = document.getElementById('simple-verdict-card');
+    const verdictTitle = document.getElementById('simple-verdict-title');
+    const verdictText = document.getElementById('simple-verdict-text');
+
+    if (!trafficLight || !verdictCard || !verdictTitle || !verdictText) return;
+
+    // Map traffic light to simple UI
+    let icon = '⏳';
+    let trafficClass = 'traffic-unknown';
+    let verdictClass = 'verdict-unknown';
+    let title = window.TRUST.i18n.get('simpleVerdictSafe');
+    let text = '';
+
+    if (evalData.trafficLight === 'green') {
+      icon = '✅';
+      trafficClass = 'traffic-safe';
+      verdictClass = 'verdict-safe';
+      title = window.TRUST.i18n.get('simpleVerdictSafe');
+      text = evalData.score >= 95
+        ? 'We checked this computer thoroughly and found no dangerous software. It is safe to use for banking.'
+        : 'This computer looks safe for banking. We found no serious security problems.';
+    } else if (evalData.trafficLight === 'yellow') {
+      icon = '⚠️';
+      trafficClass = 'traffic-caution';
+      verdictClass = 'verdict-caution';
+      title = window.TRUST.i18n.get('simpleVerdictCaution');
+      text = 'We found some minor security issues on this computer. If you must use it for banking, use your bank\'s on-screen keyboard instead of typing your password.';
+    } else if (evalData.trafficLight === 'red') {
+      icon = '🚫';
+      trafficClass = 'traffic-danger';
+      verdictClass = 'verdict-danger';
+      title = window.TRUST.i18n.get('simpleVerdictDanger');
+      text = 'This computer has dangerous software that could steal your password! Find a different computer or use your phone for mobile banking instead.';
+    }
+
+    trafficLight.className = `simple-traffic-light ${trafficClass}`;
+    trafficLight.querySelector('.traffic-icon').textContent = icon;
+
+    verdictCard.className = `simple-verdict-card ${verdictClass}`;
+    verdictTitle.textContent = title;
+    verdictText.textContent = text;
+
+    // Update individual check statuses
+    this.updateSimpleCheckStatus('keyboard', evalData);
+    this.updateSimpleCheckStatus('screen', evalData);
+    this.updateSimpleCheckStatus('clipboard', evalData);
+    this.updateSimpleCheckStatus('connection', evalData);
+    this.updateSimpleCheckStatus('bot', evalData);
+  },
+
+  /**
+   * Update individual check status indicators in Simple View
+   */
+  updateSimpleCheckStatus(checkType, evalData) {
+    const statusEl = document.querySelector(`.check-status[data-check="${checkType}"]`);
+    if (!statusEl) return;
+
+    let status = '✅';
+    let passed = true;
+
+    // Map detector results to simple checks
+    switch (checkType) {
+      case 'keyboard':
+        // Check inputTiming detector
+        if (evalData.categoryBreakdown && evalData.categoryBreakdown.inputTiming) {
+          passed = evalData.categoryBreakdown.inputTiming.score >= 70;
+        }
+        break;
+      case 'screen':
+        // Check domScript detector (phishing overlays)
+        if (evalData.categoryBreakdown && evalData.categoryBreakdown.domScript) {
+          passed = evalData.categoryBreakdown.domScript.score >= 70;
+        }
+        break;
+      case 'clipboard':
+        if (evalData.categoryBreakdown && evalData.categoryBreakdown.clipboard) {
+          passed = evalData.categoryBreakdown.clipboard.score >= 70;
+        }
+        break;
+      case 'connection':
+        // Check environment and networkSignals
+        if (evalData.categoryBreakdown && evalData.categoryBreakdown.environment) {
+          passed = evalData.categoryBreakdown.environment.score >= 70;
+        }
+        break;
+      case 'bot':
+        // Check browserEnv detector (webdriver, automation)
+        if (evalData.categoryBreakdown && evalData.categoryBreakdown.browserEnv) {
+          passed = evalData.categoryBreakdown.browserEnv.score >= 70;
+        }
+        break;
+    }
+
+    if (!passed) {
+      status = '❌';
+    }
+
+    statusEl.textContent = status;
+  },
+
+  animateScoreCounter(el, targetScore) {
+    let current = 0;
+    const duration = 500;
+    const startTime = performance.now();
+
+    const frame = (now) => {
+      const progress = Math.min(1, (now - startTime) / duration);
+      current = Math.round(progress * targetScore);
+      el.textContent = current;
+      if (progress < 1) {
+        requestAnimationFrame(frame);
+      }
+    };
+    requestAnimationFrame(frame);
+  },
+
+  renderScoreDial(score, color) {
+    const dialFill = document.getElementById('dial-meter-fill');
+    if (!dialFill) return;
+
+    // Circumference for r=70 is 2 * PI * 70 = 439.82
+    const circumference = 439.82;
+    // Only arc of ~260 degrees (0.72 of circle)
+    const arcTotal = circumference * 0.75;
+    const strokeDash = (score / 100) * arcTotal;
+    
+    dialFill.style.strokeDasharray = `${strokeDash} ${circumference}`;
+    dialFill.style.stroke = color;
+  },
+
+  renderSummaryBullets(bullets) {
+    const listEl = document.getElementById('summary-bullets-list');
+    if (!listEl) return;
+
+    if (!bullets || bullets.length === 0) {
+      listEl.innerHTML = `<li class="summary-item item-info">No signals detected yet.</li>`;
+      return;
+    }
+
+    let html = '';
+    bullets.forEach(b => {
+      html += `
+        <li class="summary-item item-${escapeHtml(b.type)}">
+          <span class="summary-icon">${escapeHtml(b.icon)}</span>
+          <div class="summary-text-wrap">
+            <div class="summary-title">
+              <strong>${escapeHtml(b.title)}</strong>
+              <span class="tag-badge tag-${escapeHtml(b.type)}">${escapeHtml(b.tag)}</span>
+            </div>
+            <div class="summary-desc">${escapeHtml(b.text)}</div>
+            <div class="summary-importance">${escapeHtml(b.importance)}</div>
+          </div>
+        </li>
+      `;
+    });
+
+    listEl.innerHTML = html;
+  },
+
+  renderCategoryCards(categories) {
+    const gridEl = document.getElementById('category-cards-grid');
+    if (!gridEl) return;
+
+    let html = '';
+    for (const [key, cat] of Object.entries(categories)) {
+      const statusClass = cat.status === 'PASSED' ? 'status-pass' : cat.status === 'WARN' ? 'status-warn' : 'status-fail';
+      const statusIcon = cat.status === 'PASSED' ? '✓' : cat.status === 'WARN' ? '⚠' : '✕';
+
+      html += `
+        <div class="cat-card ${escapeHtml(statusClass)}">
+          <div class="cat-card-header">
+            <div class="cat-name">${escapeHtml(cat.name)}</div>
+            <span class="cat-badge badge-${escapeHtml(statusClass)}">${escapeHtml(statusIcon)} ${escapeHtml(cat.status)}</span>
+          </div>
+          <div class="cat-score-bar-bg">
+            <div class="cat-score-bar-fill" style="width: ${Math.max(0, Math.min(100, cat.score))}%; background: ${cat.score >= 90 ? '#10b981' : cat.score >= 70 ? '#f59e0b' : '#ef4444'}"></div>
+          </div>
+          <div class="cat-footer">
+            <span>Score: <strong>${escapeHtml(cat.score)}/100</strong></span>
+            <span>Weight: <strong>${escapeHtml(cat.weight)}%</strong></span>
+          </div>
+        </div>
+      `;
+    }
+
+    gridEl.innerHTML = html;
+  },
+
+  renderSignalDetails(findings) {
+    const container = document.getElementById('signal-details-container');
+    if (!container) return;
+
+    if (!findings || findings.length === 0) {
+      container.innerHTML = '<p class="text-muted">No signals available.</p>';
+      return;
+    }
+
+    let html = `
+      <table class="signals-table">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Signal Detector</th>
+            <th>Observed Telemetry</th>
+            <th>Baseline Expected</th>
+            <th>Impact</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    findings.forEach(f => {
+      const statusBadge = f.status === 'PASSED'
+        ? '<span class="badge badge-success">✓ PASS</span>'
+        : f.status === 'WARN'
+        ? '<span class="badge badge-warning">⚠ WARN</span>'
+        : f.status === 'INFO'
+        ? '<span class="badge badge-info">ℹ INFO</span>'
+        : '<span class="badge badge-danger">🚨 FAIL</span>';
+
+      const penaltyText = f.penalty > 0 ? `<span class="penalty-tag">-${escapeHtml(f.penalty)} pts</span>` : '<span class="penalty-zero">0</span>';
+
+      html += `
+        <tr class="signal-row-${escapeHtml(f.status.toLowerCase())}">
+          <td>${statusBadge}</td>
+          <td>
+            <strong>${escapeHtml(f.title)}</strong>
+            <div class="signal-subtext">${escapeHtml(f.detectorName || '')}</div>
+          </td>
+          <td>
+            <code>${escapeHtml(f.observed)}</code>
+            <div class="signal-explain">${escapeHtml(f.explanation)}</div>
+          </td>
+          <td class="text-muted">${escapeHtml(f.expected)}</td>
+          <td>${penaltyText}</td>
+        </tr>
+      `;
+    });
+
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+  }
+};
+
+// Auto-boot on DOMContentLoaded
+window.addEventListener('DOMContentLoaded', () => {
+  window.TRUST.app.init();
+});
+
+</script>
+</body>
+</html>

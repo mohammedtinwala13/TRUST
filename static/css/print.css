@@ -1,0 +1,108 @@
+/* ==========================================================================
+   TRUST - Print & PDF Export Stylesheet
+   ========================================================================== */
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt;
+  }
+
+  .trust-header,
+  .trust-nav-tabs,
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger-outline,
+  .lang-select-wrap,
+  .interactive-card,
+  .simulator-grid,
+  .checklist-list,
+  .qr-share-card {
+    display: none !important;
+  }
+
+  .trust-main {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .trust-tab-pane {
+    display: block !important;
+  }
+
+  #tab-interactive,
+  #tab-simulator,
+  #tab-checklist {
+    display: none !important;
+  }
+
+  .score-hud-card {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+  }
+
+  .score-value-text {
+    color: #0f172a !important;
+  }
+
+  .recommendation-card {
+    background: #f1f5f9 !important;
+    border: 2px solid #64748b !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+  }
+
+  .rec-body {
+    color: #1e293b !important;
+  }
+
+  .signals-table-wrap {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+
+  .signals-table th {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+  }
+
+  .signals-table td {
+    border-bottom: 1px solid #e2e8f0 !important;
+    color: #1e293b !important;
+  }
+
+  .cat-card {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+
+  .cat-name {
+    color: #0f172a !important;
+  }
+
+  .summary-item {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+
+  .summary-title {
+    color: #0f172a !important;
+  }
+
+  .print-only-header {
+    display: block !important;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #0f172a;
+  }
+}
+
+.print-only-header {
+  display: none;
+}
