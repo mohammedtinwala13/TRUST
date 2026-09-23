@@ -1,6 +1,10 @@
 # TRUST — Terminal Risk & Unseen Signal Tracker
 ### Browser-Based Pre-Banking Safety Check for Public & Untrusted Terminals
 
+Live website link - https://mohammedtinwala13.github.io/TRUST/
+(hosted on github pages)
+
+
 [![Live Demo](https://img.shields.io/badge/Demo-Live%20Preview-06b6d4)](http://localhost:8000)
 [![Zero Install](https://img.shields.io/badge/Install-Zero%20Install-10b981)](trust-standalone.html)
 [![Privacy First](https://img.shields.io/badge/Privacy-100%25%20Local-8b5cf6)]()
